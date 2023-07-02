@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface DepartmentRepository extends JpaRepository<Department,Integer>
+public interface DepartmentRepository extends JpaRepository<Department,BigDecimal>
 {
-
-    List<Department> findByEmployees_EmployeeId(String empId);
 
     Optional<Department> findById(BigDecimal departmentId);
 
     void deleteById(BigDecimal departmentId);
+
+   // List<Department> findByEmployeeId(BigDecimal employeeId);
 }

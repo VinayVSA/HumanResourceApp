@@ -9,7 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface RegionRepository extends JpaRepository<Region,Integer> {
-    void deleteById(BigDecimal regionId);
 
-    Optional<Region> findById(BigDecimal regionId);
+    Optional<Region> findByRegionId(BigDecimal regionId);
+
+    void deleteByRegionId(BigDecimal regionId);
 }

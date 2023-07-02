@@ -12,7 +12,9 @@ public interface DepartmentService {
     Department getDepartmentById(BigDecimal departmentId);
     Map<String, BigDecimal> findMaxSalaryByDepartmentId(BigDecimal departmentId);
     Map<String, BigDecimal> findMinSalaryByDepartmentId(BigDecimal departmentId);
-    List<Department> getDepartmentsByEmployeeId(String empId);
+
+    //List<Department> getDepartmentsByEmployeeId(BigDecimal employeeId);
+
     void deleteDepartment(BigDecimal departmentId);
 }
 

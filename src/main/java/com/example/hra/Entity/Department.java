@@ -22,8 +22,14 @@ public class Department {
     @Column(name = "department_id")
     private BigDecimal departmentId;
 
+
+
     @Column(name = "department_name")
     private String departmentName;
+
+    @ManyToOne
+    @JoinColumn(name = "managerId")
+    private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "location_id")

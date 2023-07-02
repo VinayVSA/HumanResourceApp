@@ -15,7 +15,7 @@ public class RegionServiceImplement implements RegionService {
     private RegionRepository regionRepository;
 
     @Autowired
-    public void RegionServiceImpl(RegionRepository regionRepository) {
+    public void setRegionRepository(RegionRepository regionRepository) {
         this.regionRepository = regionRepository;
     }
 
@@ -38,13 +38,13 @@ public class RegionServiceImplement implements RegionService {
 
     @Override
     public Region getRegionById(BigDecimal regionId) {
-        Optional<Region> region = regionRepository.findById(regionId);
+        Optional<Region> region = regionRepository.findByRegionId(regionId);
         return region.orElse(null);
     }
 
     @Override
     public void deleteRegion(BigDecimal regionId) {
-        regionRepository.deleteById(regionId);
+        regionRepository.deleteByRegionId(regionId);
     }
 }
 
