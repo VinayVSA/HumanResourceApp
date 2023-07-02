@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class JobHistory {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @ManyToOne
     private Employees employee;
 

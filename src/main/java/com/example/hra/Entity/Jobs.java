@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Jobs {
 
-    @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Id
     private String jobId;
     @Column
     private String JobTitle;

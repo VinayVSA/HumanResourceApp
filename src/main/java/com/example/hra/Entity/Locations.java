@@ -16,7 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Locations {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer locationId;
     @Column
     private String streetAddress;
