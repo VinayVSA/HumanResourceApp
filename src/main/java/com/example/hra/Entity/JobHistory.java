@@ -8,26 +8,38 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name="JOBHISTORY")
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "job_history")
 public class JobHistory {
 
-    @Id
-    @ManyToOne
-    private Employees employee;
+    @EmbeddedId
+    private JobHistoryId id;
 
-    @Column
+    @ManyToOne
+    @MapsId("employeeId")
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id")
+    private Job job;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+
+    @Column(name = "start_date")
     private Date startDate;
-    @Column
+
+    @Column(name = "end_date")
     private Date endDate;
 
-    @ManyToOne
-    private Jobs job;
 
-    @ManyToOne
-    private Departments department;
 }
+

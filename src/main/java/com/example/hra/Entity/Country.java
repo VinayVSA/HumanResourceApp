@@ -7,19 +7,26 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @Entity
-@Table(name="COUNTRY")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Countries {
+@Table(name = "countries")
+public class Country {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "country_id")
     private String countryId;
-    @Column
+
+    @Column(name = "country_name")
     private String countryName;
+
     @ManyToOne
-    private Regions region;
+    @JoinColumn(name = "region_id")
+    private Region region;
+
 
 }
+
