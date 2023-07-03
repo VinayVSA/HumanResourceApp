@@ -42,7 +42,7 @@ public class LocationServiceImplement implements LocationService {
     }
 
     @Override
-    public String deleteById(BigDecimal locationId) {
+    public String deleteByLocationId(BigDecimal locationId) {
         locationRepository.deleteByLocationId(locationId);
         return "Record deleted Successfully";
     }

@@ -9,7 +9,7 @@ public interface LocationService {
     String updateLocation(Location location);
     List<Location> getAllLocations();
     Location getLocationById(BigDecimal locationId);
-    String deleteById(BigDecimal locationId);
+    String deleteByLocationId(BigDecimal locationId);
 }
 
 

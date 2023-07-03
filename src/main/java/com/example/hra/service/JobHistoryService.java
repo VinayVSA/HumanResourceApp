@@ -1,19 +1,14 @@
 package com.example.hra.service;
-
 import com.example.hra.Entity.JobHistory;
-import com.example.hra.Entity.JobHistoryId;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 public interface JobHistoryService {
+    JobHistory createJobHistoryEntry(BigDecimal employeeId, Date startDate, String jobId, BigDecimal departmentId);
 
-    String addJobHistory(JobHistory jobHistory);
-
-    String updateJobHistoryEndDate(BigDecimal empId, Date endDate);
-
-    String findExperienceOfEmployees(BigDecimal empId);
-
-    //String listAllEmployeesWithLessThanOneYearExperience();
-
+    JobHistory updateJobHistoryEndDate(BigDecimal employeeId, Date endDate);
+    Map<String, Integer> findExperienceOfEmployee(BigDecimal employeeId);
+    Map<String, Integer> findEmployeesWithLessThanOneYearExperience();
 }

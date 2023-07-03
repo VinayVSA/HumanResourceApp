@@ -5,98 +5,96 @@ import com.example.hra.Repository.DepartmentRepository;
 import com.example.hra.Repository.EmployeeRepository;
 import com.example.hra.Repository.JobHistoryRepository;
 import com.example.hra.Repository.JobRepository;
-import com.example.hra.service.JobHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class JobHistoryServiceImplement implements JobHistoryService {
 
     private JobHistoryRepository jobHistoryRepository;
-    private JobRepository jobRepository;
     private EmployeeRepository employeeRepository;
+    private JobRepository jobRepository;
     private DepartmentRepository departmentRepository;
 
     @Autowired
-    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
+    public void setJobHistoryRepository(JobHistoryRepository jobHistoryRepository) {
+        this.jobHistoryRepository = jobHistoryRepository;
     }
-
     @Autowired
     public void setEmployeeRepository(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
-
     @Autowired
     public void setJobRepository(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
     }
 
     @Autowired
-    public void setJobHistoryRepository(JobHistoryRepository jobHistoryRepository) {
-        this.jobHistoryRepository = jobHistoryRepository;
+    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
     }
 
     @Override
-    public String addJobHistory(JobHistory jobHistory) {
-        jobHistoryRepository.save(jobHistory);
-        return "Record Created Successfully";
+    public JobHistory createJobHistoryEntry(BigDecimal employeeId, Date startDate, String jobId, BigDecimal departmentId) {
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        Job job = jobRepository.findByJobId(jobId);
+        Department department = departmentRepository.findByDepartmentId(departmentId);
+
+        if (employee != null && job != null && department != null) {
+            JobHistoryId jobHistoryId = new JobHistoryId(employeeId, startDate);
+            JobHistory jobHistory = new JobHistory(jobHistoryId, employee, job, department, startDate, null);
+            return jobHistoryRepository.save(jobHistory);
+        }
+        return null;
     }
 
-
-
     @Override
-    public String updateJobHistoryEndDate(BigDecimal empId, Date endDate) {
-        JobHistory jobHistory = (JobHistory) jobHistoryRepository.findById(new JobHistoryId(empId, new Date()))
-                .orElse(null);
-        if (jobHistory != null) {
+    public JobHistory updateJobHistoryEndDate(BigDecimal employeeId, Date endDate) {
+        Optional<JobHistory> jobHistoryOptional = jobHistoryRepository.findByIdEmployeeIdAndEndDateIsNull(employeeId);
+        if (jobHistoryOptional.isPresent()) {
+            JobHistory jobHistory = jobHistoryOptional.get();
             jobHistory.setEndDate(endDate);
-            jobHistoryRepository.save(jobHistory);
-            return "Record Modified Successfully";
+            return jobHistoryRepository.save(jobHistory);
         }
-        return "Record Not Found";
+        return null;
     }
 
     @Override
-    public String findExperienceOfEmployees(BigDecimal empId) {
-        JobHistory jobHistory = jobHistoryRepository.findFirstByEmployee_EmployeeIdOrderByEndDateDesc(empId);
-        if (jobHistory != null) {
-            Date endDate = jobHistory.getEndDate() != null ? jobHistory.getEndDate() : new Date();
-            long diff = endDate.getTime() - jobHistory.getStartDate().getTime();
-            long years = diff / (1000L * 60L * 60L * 24L * 365L);
-            diff = diff % (1000L * 60L * 60L * 24L * 365L);
-            long months = diff / (1000L * 60L * 60L * 24L * 30L);
-            diff = diff % (1000L * 60L * 60L * 24L * 30L);
-            long days = diff / (1000L * 60L * 60L * 24L);
+    public Map<String, Integer> findExperienceOfEmployee(BigDecimal employeeId) {
+        Map<String, Integer> experienceMap = new HashMap<>();
 
-            return String.format("{\"years\": %d, \"months\": %d, \"days\": %d}", years, months, days);
-        }
-        return "{}";
+        Integer totalDays = jobHistoryRepository.calculateTotalDaysOfExperience(employeeId);
+        int years = totalDays / 365;
+        int months = (totalDays % 365) / 30;
+        int days = (totalDays % 365) % 30;
+
+        experienceMap.put("years", years);
+        experienceMap.put("months", months);
+        experienceMap.put("days", days);
+
+        return experienceMap;
     }
 
+    @Override
+    public Map<String, Integer> findEmployeesWithLessThanOneYearExperience() {
+        Map<String, Integer> experienceMap = new HashMap<>();
 
+        Integer totalDays = jobHistoryRepository.calculateTotalDaysOfExperienceForAllEmployees();
+        int years = totalDays / 365;
+        int months = (totalDays % 365) / 30;
+        int days = (totalDays % 365) % 30;
 
-  /*  @Override
-    public String listAllEmployeesWithLessThanOneYearExperience() {
-        Calendar oneYearAgo = Calendar.getInstance();
-        oneYearAgo.add(Calendar.YEAR, -1);
-        Date startDate = oneYearAgo.getTime();
-        long experienceInMillis = startDate.getTime();
+        experienceMap.put("years", years);
+        experienceMap.put("months", months);
+        experienceMap.put("days", days);
 
-        jobHistoryRepository.findAllByStartDateGreaterThanEqual(startDate).stream()
-                .map(jobHistory -> {
-                    long diff = jobHistory.getEndDate().getTime() - jobHistory.getStartDate().getTime();
-                    return String.format("{\"years\": %d, \"months\": %d, \"days\": %d}",
-                            diff / (1000L * 60L * 60L * 24L * 365L),
-                            diff / (1000L * 60L * 60L * 24L * 30L),
-                            diff / (1000L * 60L * 60L * 24L));
-                }).collect(Collectors.toList());
-    }*/
-
-
+        return experienceMap;
+    }
 }

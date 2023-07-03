@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,BigDecimal> {
@@ -14,5 +15,29 @@ public interface EmployeeRepository extends JpaRepository<Employee,BigDecimal> {
 
     BigDecimal findMaxSalaryByDepartment(Department dep);
 
-    Optional<Employee> findById(BigDecimal employeeId);
+    Employee findByFirstName(String firstName);
+
+    Employee findByEmail(String email);
+
+    Employee findByPhoneNumber(String phoneNumber);
+    
+
+    List<Employee> findByDepartmentId(BigDecimal departmentId);
+
+
+    List<Employee> findByHireDateBetween(LocalDate fromHireDate, LocalDate toHireDate);
+    
+
+    List<Employee> findByCommissionPctIsNull();
+
+    BigDecimal findTotalCommissionIssuedToEmployeeByDepartment(BigDecimal departmentId);
+
+
+    List<Employee> findAllEmployeesGroupByDepartment();
+
+    List<Employee> findByManagerIsNotNull();
+
+    List<Employee> countAllEmployeesGroupByLocation();
+
+    BigDecimal findMaxSalaryOfJobByEmployeeId(BigDecimal employeeId);
 }

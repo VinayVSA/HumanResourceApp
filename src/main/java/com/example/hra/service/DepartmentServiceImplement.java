@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class DepartmentServiceImplement implements DepartmentService {
@@ -42,40 +41,42 @@ public class DepartmentServiceImplement implements DepartmentService {
 
     @Override
     public Department getDepartmentById(BigDecimal departmentId) {
-        Optional<Department> department = departmentRepository.findById(departmentId);
-        return department.orElse(null);
+        Department department = departmentRepository.findByDepartmentId(departmentId);
+        return department;
     }
 
     @Override
     public Map<String, BigDecimal> findMaxSalaryByDepartmentId(BigDecimal departmentId) {
-        Optional<Department> department = departmentRepository.findById(departmentId);
+
+        Department department = departmentRepository.findByDepartmentId(departmentId);
         Map<String, BigDecimal> result = new HashMap<>();
-        department.ifPresent(dep -> {
-            BigDecimal maxSalary = employeeRepository.findMaxSalaryByDepartment(dep);
-            result.put(dep.getDepartmentName(), maxSalary);
-        });
+        BigDecimal maxSalary = employeeRepository.findMaxSalaryByDepartment(department);
+        if (maxSalary != null)
+        {
+            result.put(department.getDepartmentName(),maxSalary);
+        }
         return result;
     }
 
     @Override
     public Map<String, BigDecimal> findMinSalaryByDepartmentId(BigDecimal departmentId) {
-        Optional<Department> department = departmentRepository.findById(departmentId);
+        Department department = departmentRepository.findByDepartmentId(departmentId);
         Map<String, BigDecimal> result = new HashMap<>();
-        department.ifPresent(dep -> {
-            BigDecimal minSalary = employeeRepository.findMinSalaryByDepartment(dep);
-            result.put(dep.getDepartmentName(),minSalary);
-        });
+        BigDecimal minSalary = employeeRepository.findMinSalaryByDepartment(department);
+        if (minSalary != null)
+        {
+            result.put(department.getDepartmentName(),minSalary);
+        }
         return result;
     }
-
-    /*@Override
-    public List<Department> getDepartmentsByEmployeeId(BigDecimal employeeId) {
+    @Override
+    public List<Department> getDepartmentsByEmployee(BigDecimal employeeId) {
         return departmentRepository.findByEmployeeId(employeeId);
-    }*/
+    }
 
     @Override
     public void deleteDepartment(BigDecimal departmentId) {
-        departmentRepository.deleteById(departmentId);
+        departmentRepository.deleteByDepartmentId(departmentId);
     }
 }
 

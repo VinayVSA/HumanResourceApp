@@ -37,14 +37,12 @@ public class JobServiceImplement implements JobService {
 
     @Override
     public Job getJobById(String jobId) {
-        return jobRepository.findById(jobId)
-                .orElse(null);
+        return jobRepository.findByJobId(jobId);
     }
 
     @Override
     public Job updateJobSalary(String jobId, BigDecimal minSalary, BigDecimal maxSalary) {
-        Job job = jobRepository.findById(jobId)
-                .orElse(null);
+        Job job = jobRepository.findByJobId(jobId);
         if (job != null) {
             job.setMinSalary(minSalary);
             job.setMaxSalary(maxSalary);
@@ -55,7 +53,7 @@ public class JobServiceImplement implements JobService {
 
     @Override
     public String deleteJobById(String jobId) {
-        jobRepository.deleteById(jobId);
+        jobRepository.deleteByJobId(jobId);
         return "Record deleted Successfully";
     }
 }

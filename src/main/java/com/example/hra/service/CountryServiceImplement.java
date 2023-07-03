@@ -19,9 +19,9 @@ public class CountryServiceImplement implements CountryService {
     }
 
     @Override
-    public String addCountry(Country country) {
+    public void addCountry(Country country) {
+
         countryRepository.save(country);
-        return "Record Created Successfully";
     }
 
     @Override
