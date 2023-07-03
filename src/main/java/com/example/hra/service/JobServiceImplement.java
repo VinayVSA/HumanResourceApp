@@ -5,6 +5,7 @@ import com.example.hra.Repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class JobServiceImplement implements JobService {
         jobRepository.save(job);
         return "Record Created Successfully";
     }
+
+    //need to implement update method
 
     @Override
     public String updateJob(Job job) {
@@ -52,9 +55,15 @@ public class JobServiceImplement implements JobService {
     }
 
     @Override
-    public String deleteJobById(String jobId) {
-        jobRepository.deleteByJobId(jobId);
-        return "Record deleted Successfully";
+    @Transactional
+    public void deleteJobById(String jobId)
+    {
+        Job job = jobRepository.findByJobId(jobId);
+        if(job!=null)
+        {
+            jobRepository.deleteByJobId(jobId);
+        }
+
     }
 }
 

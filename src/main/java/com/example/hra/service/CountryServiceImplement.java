@@ -25,7 +25,7 @@ public class CountryServiceImplement implements CountryService {
 
     @Override
     public void modifyCountry(Country country) {
-        countryRepository.save(country);
+
 
     }
 
@@ -35,14 +35,20 @@ public class CountryServiceImplement implements CountryService {
     }
 
     @Override
-    public void deleteCountry(String id) {
-        countryRepository.deleteById(id);
+    public void deleteCountry(String countryId) {
+        countryRepository.deleteById(countryId);
     }
 
     @Override
-    public Country searchCountryById(String id) {
-        Optional<Country> country = countryRepository.findById(id);
-        return country.orElse(null);
+    public Country searchCountryById(String countryId) {
+        Country country = countryRepository.findByCountryId(countryId);
+        if(country!=null)
+        {
+            return country;
+        }
+        else
+            return null;
+
     }
 }
 

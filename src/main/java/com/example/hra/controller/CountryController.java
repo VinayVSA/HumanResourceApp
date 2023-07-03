@@ -20,6 +20,8 @@ public class CountryController {
         this.countryService = countryService;
     }
 
+    //Partially working problem with regionId
+
     @PostMapping("")
     public ResponseEntity<String> addCountry(@RequestBody Country country) {
         countryService.addCountry(country);
@@ -27,6 +29,7 @@ public class CountryController {
     }
 
 
+    //Not Working
 
     @PutMapping("")
     public ResponseEntity<String> updateCountry(@RequestBody Country country) {
@@ -45,8 +48,8 @@ public class CountryController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCountry(@PathVariable("id") String id) {
-        countryService.deleteCountry(id);
+    public ResponseEntity<Void> deleteCountry(@PathVariable("id") String countryId) {
+        countryService.deleteCountry(countryId);
         return ResponseEntity.ok().build();
     }
 

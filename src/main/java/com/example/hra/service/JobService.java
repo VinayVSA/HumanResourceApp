@@ -17,5 +17,5 @@ public interface JobService {
 
     Job updateJobSalary(String jobId, BigDecimal minSalary, BigDecimal maxSalary);
 
-    String deleteJobById(String jobId);
+    void deleteJobById(String jobId);
 }

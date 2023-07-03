@@ -24,17 +24,18 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<String> addJob(@RequestBody Job job) {
-        String createdJob = jobService.addJob(job);
+        jobService.addJob(job);
         return ResponseEntity.status(HttpStatus.CREATED).body("Record Created Successfully");
     }
 
 
+    //need to implement
 
     @PutMapping
     public ResponseEntity<String> updateJob(@RequestBody Job job) {
-        String updatedJob = jobService.updateJob(job);
+        jobService.updateJob(job);
         return ResponseEntity.ok("Record Modified Successfully");
     }
 
@@ -63,10 +64,10 @@ public class JobController {
     }
 
 
-
     @DeleteMapping("/{jobId}")
     public ResponseEntity<String> deleteJobById(@PathVariable("jobId") String jobId) {
         jobService.deleteJobById(jobId);
+
         return ResponseEntity.ok("Record deleted Successfully");
     }
 }
