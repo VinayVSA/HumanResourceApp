@@ -20,19 +20,19 @@ public interface EmployeeService {
 
     Employee findByEmail(String email);
     Employee findByPhoneNumber(String phoneNumber);
-    List<Employee> findAllEmployeesWithNoCommission();
+    //List<Employee> findAllEmployeesWithNoCommission();
     BigDecimal findTotalCommissionIssuedToEmployeeByDepartment(BigDecimal departmentId);
-    List<Employee> findAllEmployeesByDepartment(BigDecimal departmentId);
-    List<Employee> findAllEmployeesGroupByDepartment();
-    List<Employee> listAllManagerDetails();
-    List<Employee> countAllEmployeesGroupByLocation();
+    // List<Employee> findAllEmployeesByDepartment(BigDecimal departmentId);
+   // List<Employee> findAllEmployeesGroupByDepartment();
+    //List<Employee> listAllManagerDetails();
+    //List<Employee> countAllEmployeesGroupByLocation();
     BigDecimal findMaxSalaryOfJobByEmployeeId(BigDecimal employeeId);
     Employee updateEmployeeEmail(BigDecimal employeeId, String email);
     Employee updateEmployeePhoneNumber(BigDecimal employeeId, String phoneNumber);
-    List<Job> findAllOpenPositions();
-    List<Job> findAllOpenPositionsByDepartment(BigDecimal departmentId);
+    //List<Job> findAllOpenPositions();
+    //List<Job> findAllOpenPositionsByDepartment(BigDecimal departmentId);
 
-    List<Employee> findAllEmployeesByHireDate(LocalDate fromHireDate, LocalDate toHireDate);
+    //List<Employee> findAllEmployeesByHireDate(LocalDate fromHireDate, LocalDate toHireDate);
 
     void deleteEmployee(BigDecimal employeeId);
 }

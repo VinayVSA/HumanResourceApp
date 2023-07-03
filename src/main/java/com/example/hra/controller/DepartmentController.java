@@ -56,11 +56,11 @@ public class DepartmentController {
 
 
 
-    @GetMapping("/{empId}")
+    /*@GetMapping("/{empId}")
     public ResponseEntity<List<Department>> getDepartmentsByEmployee(@PathVariable("employeeId") BigDecimal employeeId) {
         List<Department> departments = departmentService.getDepartmentsByEmployee(employeeId);
         return ResponseEntity.ok(departments);
-    }
+    }*/
 
 
 

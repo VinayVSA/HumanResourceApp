@@ -17,6 +17,6 @@ public interface DepartmentRepository extends JpaRepository<Department,BigDecima
 
     Department findByDepartmentId(BigDecimal departmentId);
 
-    List<Department> findByEmployeeId(BigDecimal employeeId);
+  //  List<Department> findByEmployeeId(BigDecimal employeeId);
 
 }

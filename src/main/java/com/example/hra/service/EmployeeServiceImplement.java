@@ -105,19 +105,20 @@ public class EmployeeServiceImplement implements EmployeeService {
             return employeeRepository.findByPhoneNumber(phoneNumber);
         }
 
-        @Override
-        public List<Employee> findAllEmployeesWithNoCommission() {
-            return employeeRepository.findByCommissionPctIsNull();
-        }
+
 
         @Override
         public BigDecimal findTotalCommissionIssuedToEmployeeByDepartment(BigDecimal departmentId) {
             return employeeRepository.findTotalCommissionIssuedToEmployeeByDepartment(departmentId);
         }
 
-        @Override
+       /* @Override
         public List<Employee> findAllEmployeesByDepartment(BigDecimal departmentId) {
             return employeeRepository.findByDepartmentId(departmentId);
+        }
+         @Override
+        public List<Employee> findAllEmployeesWithNoCommission() {
+            return employeeRepository.findByCommissionPctIsNull();
         }
 
         @Override
@@ -134,6 +135,20 @@ public class EmployeeServiceImplement implements EmployeeService {
         public List<Employee> countAllEmployeesGroupByLocation() {
             return employeeRepository.countAllEmployeesGroupByLocation();
         }
+        @Override
+        public List<Job> findAllOpenPositionsByDepartment(BigDecimal departmentId) {
+            return jobRepository.findByDepartmentIdAndEmployeeIsNull(departmentId);
+        }
+
+        @Override
+        public List<Employee> findAllEmployeesByHireDate(LocalDate fromHireDate, LocalDate toHireDate) {
+            return employeeRepository.findByHireDateBetween(fromHireDate, toHireDate);
+        }
+        @Override
+        public List<Job> findAllOpenPositions() {
+            return jobRepository.findByEmployeeIsNull();
+        }
+        */
 
         @Override
         public BigDecimal findMaxSalaryOfJobByEmployeeId(BigDecimal employeeId) {
@@ -160,20 +175,9 @@ public class EmployeeServiceImplement implements EmployeeService {
             return null;
         }
 
-        @Override
-        public List<Job> findAllOpenPositions() {
-            return jobRepository.findByEmployeeIsNull();
-        }
 
-        @Override
-        public List<Job> findAllOpenPositionsByDepartment(BigDecimal departmentId) {
-            return jobRepository.findByDepartmentIdAndEmployeeIsNull(departmentId);
-        }
 
-        @Override
-        public List<Employee> findAllEmployeesByHireDate(LocalDate fromHireDate, LocalDate toHireDate) {
-            return employeeRepository.findByHireDateBetween(fromHireDate, toHireDate);
-        }
+
 
         @Override
         public void deleteEmployee(BigDecimal employeeId) {

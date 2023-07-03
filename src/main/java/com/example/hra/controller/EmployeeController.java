@@ -69,18 +69,24 @@ public class EmployeeController {
         public Employee findByPhoneNumber(@PathVariable("phone") String phoneNumber) {
             return employeeService.findByPhoneNumber(phoneNumber);
         }
+         @GetMapping("/findTotalCommissionIssuedToEmployeeByDepartment/{department_id}")
+            public BigDecimal findTotalCommissionIssuedToEmployeeByDepartment(@PathVariable("department_id") BigDecimal departmentId) {
+            return employeeService.findTotalCommissionIssuedToEmployeeByDepartment(departmentId);
+        }
+         @GetMapping("/{empid}/findmaxsalaryofjob")
+            public BigDecimal findMaxSalaryOfJobByEmployeeId(@PathVariable("empid") BigDecimal employeeId) {
+            return employeeService.findMaxSalaryOfJobByEmployeeId(employeeId);
+        }
+
+        /*
 
         @GetMapping("/findAllEmployeeWithNoCommission")
         public List<Employee> findAllEmployeesWithNoCommission() {
             return employeeService.findAllEmployeesWithNoCommission();
         }
 
-        @GetMapping("/findTotalCommissionIssuedToEmployeeByDepartment/{department_id}")
-        public BigDecimal findTotalCommissionIssuedToEmployeeByDepartment(@PathVariable("department_id") BigDecimal departmentId) {
-            return employeeService.findTotalCommissionIssuedToEmployeeByDepartment(departmentId);
-        }
 
-        @GetMapping("/listAllEmployeesByDepartment/{department_id}")
+       @GetMapping("/listAllEmployeesByDepartment/{department_id}")
         public List<Employee> findAllEmployeesByDepartment(@PathVariable("department_id") BigDecimal departmentId) {
             return employeeService.findAllEmployeesByDepartment(departmentId);
         }
@@ -100,10 +106,7 @@ public class EmployeeController {
             return employeeService.countAllEmployeesGroupByLocation();
         }
 
-        @GetMapping("/{empid}/findmaxsalaryofjob")
-        public BigDecimal findMaxSalaryOfJobByEmployeeId(@PathVariable("empid") BigDecimal employeeId) {
-            return employeeService.findMaxSalaryOfJobByEmployeeId(employeeId);
-        }
+
 
         @PutMapping("/{email}")
         public Employee updateEmployeeEmail(@PathVariable("email") String email, @RequestParam("employee_id") BigDecimal employeeId) {
@@ -131,6 +134,7 @@ public class EmployeeController {
                 @PathVariable("to_hiredate") LocalDate toHireDate) {
             return employeeService.findAllEmployeesByHireDate(fromHireDate, toHireDate);
         }
+        */
 
         @DeleteMapping("/{emp_id}")
         public void deleteEmployee(@PathVariable("emp_id") BigDecimal employeeId) {

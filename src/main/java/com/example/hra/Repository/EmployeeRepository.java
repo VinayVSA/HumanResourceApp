@@ -22,22 +22,22 @@ public interface EmployeeRepository extends JpaRepository<Employee,BigDecimal> {
     Employee findByPhoneNumber(String phoneNumber);
     
 
-    List<Employee> findByDepartmentId(BigDecimal departmentId);
+    //List<Employee> findByDepartmentId(BigDecimal departmentId);
 
 
-    List<Employee> findByHireDateBetween(LocalDate fromHireDate, LocalDate toHireDate);
+    //List<Employee> findByHireDateBetween(LocalDate fromHireDate, LocalDate toHireDate);
     
 
-    List<Employee> findByCommissionPctIsNull();
+    //List<Employee> findByCommissionPctIsNull();
 
     BigDecimal findTotalCommissionIssuedToEmployeeByDepartment(BigDecimal departmentId);
 
 
-    List<Employee> findAllEmployeesGroupByDepartment();
+    //List<Employee> findAllEmployeesGroupByDepartment();
 
-    List<Employee> findByManagerIsNotNull();
+  //  List<Employee> findByManagerIsNotNull();
 
-    List<Employee> countAllEmployeesGroupByLocation();
+    //List<Employee> countAllEmployeesGroupByLocation();
 
     BigDecimal findMaxSalaryOfJobByEmployeeId(BigDecimal employeeId);
 }

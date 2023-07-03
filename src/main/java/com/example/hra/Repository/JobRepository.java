@@ -13,11 +13,11 @@ public interface JobRepository extends JpaRepository<Job,String> {
 
 
 
-    List<Job> findByEmployeeIsNull();
+    //List<Job> findByEmployeeIsNull();
 
     Job findByJobId(String jobId);
 
     void deleteByJobId(String jobId);
 
-    List<Job> findByDepartmentIdAndEmployeeIsNull(BigDecimal departmentId);
+    //List<Job> findByDepartmentIdAndEmployeeIsNull(BigDecimal departmentId);
 }

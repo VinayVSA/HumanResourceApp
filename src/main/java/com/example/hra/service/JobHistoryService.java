@@ -9,6 +9,6 @@ public interface JobHistoryService {
     JobHistory createJobHistoryEntry(BigDecimal employeeId, Date startDate, String jobId, BigDecimal departmentId);
 
     JobHistory updateJobHistoryEndDate(BigDecimal employeeId, Date endDate);
-    Map<String, Integer> findExperienceOfEmployee(BigDecimal employeeId);
-    Map<String, Integer> findEmployeesWithLessThanOneYearExperience();
+    //Map<String, Integer> findExperienceOfEmployee(BigDecimal employeeId);
+    //Map<String, Integer> findEmployeesWithLessThanOneYearExperience();
 }

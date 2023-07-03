@@ -15,6 +15,6 @@ public interface DepartmentService {
 
     void deleteDepartment(BigDecimal departmentId);
 
-    List<Department> getDepartmentsByEmployee(BigDecimal employeeId);
+   // List<Department> getDepartmentsByEmployee(BigDecimal employeeId);
 }
 

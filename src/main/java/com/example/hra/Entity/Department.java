@@ -28,7 +28,7 @@ public class Department {
     private String departmentName;
 
     @ManyToOne
-    @JoinColumn(name = "managerId")
+    @JoinColumn(name = "manager_id")
     private Employee employee;
 
     @ManyToOne

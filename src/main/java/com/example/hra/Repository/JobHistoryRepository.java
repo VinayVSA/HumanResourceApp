@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface JobHistoryRepository extends JpaRepository<JobHistory,JobHistoryId> {
 
-    Integer calculateTotalDaysOfExperienceForAllEmployees();
+    //Integer calculateTotalDaysOfExperienceForAllEmployees();
 
     Optional<JobHistory> findByIdEmployeeIdAndEndDateIsNull(BigDecimal employeeId);
 
-    Integer calculateTotalDaysOfExperience(BigDecimal employeeId);
+    //Integer calculateTotalDaysOfExperience(BigDecimal employeeId);
 }

@@ -69,10 +69,10 @@ public class DepartmentServiceImplement implements DepartmentService {
         }
         return result;
     }
-    @Override
+    /*@Override
     public List<Department> getDepartmentsByEmployee(BigDecimal employeeId) {
         return departmentRepository.findByEmployeeId(employeeId);
-    }
+    }*/
 
     @Override
     public void deleteDepartment(BigDecimal departmentId) {
