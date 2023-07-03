@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -16,8 +17,10 @@ import javax.persistence.*;
 @Table(name = "countries")
 public class Country {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "country_id")
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "com.example.hra.Entity.RandomStringGenerator")
+    @Column(name = "country_id", length = 4)
     private String countryId;
 
     @Column(name = "country_name")

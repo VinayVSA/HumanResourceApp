@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,8 +16,9 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "jobs")
 public class Job {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "job_id")
+    @Id @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "com.example.hra.Entity.RandomStringGenerator")
+    @Column(name = "job_id", length=4)
     private String jobId;
 
     @Column(name = "job_title")

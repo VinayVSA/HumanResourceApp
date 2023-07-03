@@ -30,7 +30,7 @@ public class CountryController {
 
     @PutMapping("")
     public ResponseEntity<String> updateCountry(@RequestBody Country country) {
-        String updatedCountry = countryService.modifyCountry(country);
+        countryService.modifyCountry(country);
         return ResponseEntity.ok("Record Modified Successfully");
     }
 

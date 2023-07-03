@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CountryService {
     void addCountry(Country country);
-    String modifyCountry(Country country);
+    void modifyCountry(Country country);
     List<Country> getAllCountries();
     void deleteCountry(String id);
     Country searchCountryById(String id);
