@@ -1,4 +1,4 @@
-package com.example.hra.controller;
+package com.example.hra.Controller;
 
 import com.example.hra.Entity.Department;
 import com.example.hra.service.DepartmentService;
@@ -68,5 +68,10 @@ public class DepartmentController {
     public ResponseEntity<Void> deleteDepartment(@PathVariable("departmentId") BigDecimal departmentId) {
         departmentService.deleteDepartment(departmentId);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("")
+    public ResponseEntity<List<Department>> getAllEmployees() {
+        List<Department> departments = departmentService.getAllDepartments();
+        return ResponseEntity.ok(departments);
     }
 }

@@ -78,5 +78,10 @@ public class DepartmentServiceImplement implements DepartmentService {
     public void deleteDepartment(BigDecimal departmentId) {
         departmentRepository.deleteByDepartmentId(departmentId);
     }
+
+    @Override
+    public List<Department> getAllDepartments() {
+        return departmentRepository.findAll();
+    }
 }
 

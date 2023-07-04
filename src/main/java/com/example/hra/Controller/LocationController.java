@@ -1,4 +1,4 @@
-package com.example.hra.controller;
+package com.example.hra.Controller;
 
 import com.example.hra.Entity.Location;
 import com.example.hra.service.LocationService;

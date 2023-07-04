@@ -1,4 +1,4 @@
-package com.example.hra.controller;
+package com.example.hra.Controller;
 
 import com.example.hra.Entity.JobHistory;
 import com.example.hra.service.JobHistoryService;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/job_history")

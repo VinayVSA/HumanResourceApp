@@ -49,7 +49,8 @@ public class JobHistoryServiceImplement implements JobHistoryService {
 
         if (employee != null && job != null && department != null) {
             JobHistoryId jobHistoryId = new JobHistoryId(employeeId, startDate);
-            JobHistory jobHistory = new JobHistory(jobHistoryId, employee, job, department, startDate, null);
+            Date endDate= new Date();
+            JobHistory jobHistory = new JobHistory(jobHistoryId, employee, job, department, startDate,endDate);
             return jobHistoryRepository.save(jobHistory);
         }
         return null;

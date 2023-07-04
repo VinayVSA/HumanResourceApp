@@ -1,6 +1,7 @@
 package com.example.hra.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,8 @@ public class Department {
     @Column(name = "department_name")
     private String departmentName;
 
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
-    private Employee employee;
+    @Column(name = "manager_id")
+    private BigDecimal managerId;
 
     @ManyToOne
     @JoinColumn(name = "location_id")

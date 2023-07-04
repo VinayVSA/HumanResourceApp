@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 
 @Service
@@ -48,8 +49,8 @@ public class EmployeeServiceImplement implements EmployeeService {
 
     @Override
     public Employee assignJobToEmployee(BigDecimal employeeId, String jobId) {
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
-        Job job = jobRepository.findById(jobId).orElse(null);
+        Employee employee = employeeRepository.getEmployeeByEmployeeId(employeeId);
+        Job job = jobRepository.findByJobId(jobId);
         if (employee != null && job != null) {
             employee.setJob(job);
             return employeeRepository.save(employee);
@@ -99,13 +100,26 @@ public class EmployeeServiceImplement implements EmployeeService {
         public Employee findByEmail(String email) {
             return employeeRepository.findByEmail(email);
         }
-
         @Override
         public Employee findByPhoneNumber(String phoneNumber) {
             return employeeRepository.findByPhoneNumber(phoneNumber);
         }
 
 
+    @Override
+    public Map<String,BigDecimal> findMaxSalaryOfJobByEmployeeId(BigDecimal employeeId) {
+            Employee employee = employeeRepository.findByEmployeeId(employeeId);
+            Map<String,BigDecimal> mp = new HashMap<>();
+            if(employee!=null)
+            {
+                Job job = employee.getJob();
+                BigDecimal maxSalary = job.getMaxSalary();
+                String title = job.getJobTitle();
+                mp.put(title,maxSalary);
+                return mp;
+            }
+        return null;
+    }
 
         @Override
         public BigDecimal findTotalCommissionIssuedToEmployeeByDepartment(BigDecimal departmentId) {
@@ -150,14 +164,11 @@ public class EmployeeServiceImplement implements EmployeeService {
         }
         */
 
-        @Override
-        public BigDecimal findMaxSalaryOfJobByEmployeeId(BigDecimal employeeId) {
-            return employeeRepository.findMaxSalaryOfJobByEmployeeId(employeeId);
-        }
+
 
         @Override
-        public Employee updateEmployeeEmail(BigDecimal employeeId, String email) {
-            Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        public Employee updateEmployeeEmailByEmployeeId(String email,BigDecimal employeeId) {
+            Employee employee = employeeRepository.findByEmployeeId(employeeId);
             if (employee != null) {
                 employee.setEmail(email);
                 return employeeRepository.save(employee);
@@ -166,8 +177,8 @@ public class EmployeeServiceImplement implements EmployeeService {
         }
 
         @Override
-        public Employee updateEmployeePhoneNumber(BigDecimal employeeId, String phoneNumber) {
-            Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        public Employee updateEmployeePhoneNumberByEmployeeId( String phoneNumber,BigDecimal employeeId) {
+            Employee employee = employeeRepository.findByEmployeeId(employeeId);
             if (employee != null) {
                 employee.setPhoneNumber(phoneNumber);
                 return employeeRepository.save(employee);
@@ -183,5 +194,12 @@ public class EmployeeServiceImplement implements EmployeeService {
         public void deleteEmployee(BigDecimal employeeId) {
             employeeRepository.deleteById(employeeId);
         }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+
+       return employeeRepository.findAll();
+    }
+
 
 }

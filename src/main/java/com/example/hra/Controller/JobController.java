@@ -1,8 +1,7 @@
-package com.example.hra.controller;
+package com.example.hra.Controller;
 
 import com.example.hra.Entity.Job;
 import com.example.hra.service.JobService;
-import com.example.hra.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.example.hra.controller;
+package com.example.hra.Controller;
 
 import com.example.hra.Entity.Country;
 import com.example.hra.service.CountryService;

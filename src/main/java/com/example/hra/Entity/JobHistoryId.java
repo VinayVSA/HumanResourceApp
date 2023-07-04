@@ -23,7 +23,7 @@ public class JobHistoryId implements Serializable {
     @Column(name = "employee_id")
     private BigDecimal employeeId;
 
-    @Column(name = "startdate")
+    @Column(name = "start_date")
     private Date startDate;
 
     // Equals and hashCode methods
