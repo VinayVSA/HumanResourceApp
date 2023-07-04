@@ -23,7 +23,7 @@ public class LocationController {
 
     @PostMapping
     public ResponseEntity<String> addLocation(@RequestBody Location location) {
-        String createdLocation = locationService.addLocation(location);
+        locationService.addLocation(location);
         return ResponseEntity.status(HttpStatus.CREATED).body("Record Created Successfully");
     }
 
@@ -31,7 +31,7 @@ public class LocationController {
 
     @PutMapping
     public ResponseEntity<String> updateLocation(@RequestBody Location location) {
-        String updatedLocation = locationService.updateLocation(location);
+        locationService.updateLocation(location);
         return ResponseEntity.ok("Record Modified Successfully");
     }
 

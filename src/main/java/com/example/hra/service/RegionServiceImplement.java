@@ -5,6 +5,7 @@ import com.example.hra.Repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -21,13 +22,24 @@ public class RegionServiceImplement implements RegionService {
 
     @Override
     public String addRegion(Region region) {
-        regionRepository.save(region);
-        return "Record Created Successfully";
+
+            regionRepository.save(region);
+            return "Record Created Successfully";
+
     }
 
     @Override
     public String modifyRegion(Region region) {
-        regionRepository.save(region);
+        Region region1 = regionRepository.findByRegionId(region.getRegionId()).get();
+
+        if(region1!=null)
+        {
+            region1.setRegionId(region.getRegionId());
+            region1.setRegionName(region.getRegionName());
+            regionRepository.save(region1);
+        }
+
+
         return "Record Modified Successfully";
     }
 
@@ -43,8 +55,14 @@ public class RegionServiceImplement implements RegionService {
     }
 
     @Override
+    @Transactional
     public void deleteRegion(BigDecimal regionId) {
-        regionRepository.deleteByRegionId(regionId);
+        Region region = regionRepository.findByRegionId(regionId).get();
+        if(region!=null)
+        {
+            regionRepository.deleteRegionByRegionId(regionId);
+        }
+
     }
 }
 

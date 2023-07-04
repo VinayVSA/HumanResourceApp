@@ -43,7 +43,7 @@ public class JobHistoryServiceImplement implements JobHistoryService {
 
     @Override
     public JobHistory createJobHistoryEntry(BigDecimal employeeId, Date startDate, String jobId, BigDecimal departmentId) {
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        Employee employee = employeeRepository.findByEmployeeId(employeeId);
         Job job = jobRepository.findByJobId(jobId);
         Department department = departmentRepository.findByDepartmentId(departmentId);
 

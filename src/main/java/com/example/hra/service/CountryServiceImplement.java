@@ -19,14 +19,22 @@ public class CountryServiceImplement implements CountryService {
     }
 
     @Override
-    public void addCountry(Country country) {
+    public void addCountry(Country country)
+    {
         countryRepository.save(country);
     }
 
     @Override
     public void modifyCountry(Country country) {
 
-
+        Country country1 = countryRepository.findByCountryId(country.getCountryId());
+        if(country1!=null)
+        {
+            country1.setCountryId(country.getCountryId());
+            country1.setCountryName(country.getCountryName());
+            country1.setRegion(country.getRegion());
+            countryRepository.save(country1);
+        }
     }
 
     @Override

@@ -31,9 +31,8 @@ public class JobController {
     }
 
 
-    //need to implement
 
-    @PutMapping
+    @PutMapping("")
     public ResponseEntity<String> updateJob(@RequestBody Job job) {
         jobService.updateJob(job);
         return ResponseEntity.ok("Record Modified Successfully");
@@ -41,7 +40,7 @@ public class JobController {
 
 
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<Job>> getAllJobs() {
         List<Job> jobs = jobService.getAllJobs();
         return ResponseEntity.ok(jobs);

@@ -25,11 +25,18 @@ public class JobServiceImplement implements JobService {
         return "Record Created Successfully";
     }
 
-    //need to implement update method
 
     @Override
     public String updateJob(Job job) {
-        jobRepository.save(job);
+        Job job1 = jobRepository.findByJobId(job.getJobId());
+        if(job!=null)
+        {
+            job1.setJobId(job.getJobId());
+            job1.setJobTitle(job.getJobTitle());
+            job1.setMinSalary(job.getMinSalary());
+            job1.setMaxSalary(job.getMaxSalary());
+            jobRepository.save(job);
+        }
         return "Record Modified Successfully";
     }
 

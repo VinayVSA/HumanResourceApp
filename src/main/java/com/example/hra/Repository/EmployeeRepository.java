@@ -40,4 +40,6 @@ public interface EmployeeRepository extends JpaRepository<Employee,BigDecimal> {
     //List<Employee> countAllEmployeesGroupByLocation();
 
     BigDecimal findMaxSalaryOfJobByEmployeeId(BigDecimal employeeId);
+
+    Employee findByEmployeeId(BigDecimal employeeId);
 }

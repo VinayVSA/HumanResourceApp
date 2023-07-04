@@ -12,5 +12,5 @@ public interface RegionRepository extends JpaRepository<Region,Integer> {
 
     Optional<Region> findByRegionId(BigDecimal regionId);
 
-    void deleteByRegionId(BigDecimal regionId);
+    void deleteRegionByRegionId(BigDecimal regionId);
 }
