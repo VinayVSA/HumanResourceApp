@@ -12,9 +12,6 @@ import java.util.Optional;
 public interface JobRepository extends JpaRepository<Job,String> {
 
 
-
-    //List<Job> findByEmployeeIsNull();
-
     Job findByJobId(String jobId);
 
     void deleteByJobId(String jobId);

@@ -1,12 +1,18 @@
 package com.example.hra.Controller;
 
+import com.example.hra.Dto.DepartmentEmployeeCountDTO;
+import com.example.hra.Dto.TotalCommissionDTO;
 import com.example.hra.Entity.Employee;
+import com.example.hra.Entity.Job;
 import com.example.hra.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -80,68 +86,90 @@ public class EmployeeController {
         return employeeService.updateEmployeePhoneNumberByEmployeeId(phoneNumber,employee_id);
     }
 
+    @GetMapping("/listAllEmployeesByDepartment/{department_id}")
+    public List<Employee> findAllEmployeesByDepartment(@PathVariable("department_id") BigDecimal departmentId) {
+        return employeeService.findAllEmployeesByDepartmentId(departmentId);
+    }
+    @GetMapping("/findAllEmployeeWithNoCommission")
+    public List<Employee> findAllEmployeesWithNoCommission() {
+        return employeeService.findAllEmployeesWithNoCommission();
+    }
 
+    @GetMapping("/findAllOpenPositions")
+    public List<Job> findAllOpenPositions() {
+        return employeeService.findAllOpenPositions();
+    }
 
+    @GetMapping("/listAllManagerDetails")
+    public List<Employee> listAllManagerDetails() {
+        return employeeService.listAllManagerDetails();
+    }
 
-    //not working
+    @GetMapping("/findAllOpenPositions/{department_id}")
+    public List<Job> findAllOpenPositions(@PathVariable("department_id") BigDecimal departmentId) {
+        return employeeService.findAllOpenPositions(departmentId);
+    }
+    @GetMapping("/employees_departmentwise_count")
+    public List<DepartmentEmployeeCountDTO> countAllEmployeesGroupByDepartment() {
+        return employeeService.countAllEmployeesGroupByDepartment();
+    }
+
+    @GetMapping("/locationwisecountofemployees")
+    public List<Object[]> countAllEmployeesGroupByLocation() {
+        return employeeService.countAllEmployeesGroupByLocation();
+    }
+
+    @GetMapping("/listallemployeebyhiredate/{from_hiredate}/{to_hiredate}")
+    public List<Employee> listAllEmployeeByHireDateRange(
+            @PathVariable("from_hiredate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromHireDate,
+            @PathVariable("to_hiredate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toHireDate) {
+        return employeeService.listAllEmployeeByHireDateRange(fromHireDate, toHireDate);
+    }
+
     @GetMapping("/findTotalCommissionIssuedToEmployeeByDepartment/{department_id}")
-    public BigDecimal findTotalCommissionIssuedToEmployeeByDepartment(@PathVariable("department_id") BigDecimal departmentId) {
+    public TotalCommissionDTO findTotalCommissionIssuedToEmployeeByDepartment(
+            @PathVariable("department_id") BigDecimal departmentId) {
         return employeeService.findTotalCommissionIssuedToEmployeeByDepartment(departmentId);
     }
 
+    @PutMapping("/{department_id}/{sales_percentage}")
+    public ResponseEntity<String> assignDepartmentAndUpdateSalesPercentage(
+            @PathVariable("department_id") BigDecimal departmentId,
+            @PathVariable("sales_percentage") BigDecimal salesPercentage) {
 
-        /*
+        String result = employeeService.assignDepartmentAndUpdateSalesPercentage(departmentId, salesPercentage);
 
-        @GetMapping("/findAllEmployeeWithNoCommission")
-        public List<Employee> findAllEmployeesWithNoCommission() {
-            return employeeService.findAllEmployeesWithNoCommission();
+        if (result.equals("Record Modified Successfully")) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
+    }
+    @PutMapping("/mg=/{manager_id}")
+    public ResponseEntity<String> assignManager(
+            @PathVariable("manager_id") BigDecimal managerId,
+            @RequestBody BigDecimal employeeId) {
 
-
-       @GetMapping("/listAllEmployeesByDepartment/{department_id}")
-        public List<Employee> findAllEmployeesByDepartment(@PathVariable("department_id") BigDecimal departmentId) {
-            return employeeService.findAllEmployeesByDepartment(departmentId);
+        String result = employeeService.assignManager(employeeId, managerId);
+        if (result.equals("Record Modified Successfully")) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
+    }
+    @PutMapping("/dp/{department_id}")
+    public ResponseEntity<String> assignDepartment(
+            @PathVariable("department_id") BigDecimal departmentId,
+            @RequestBody BigDecimal employeeId) {
 
-        @GetMapping("/countAllEmployeesGroupByDepartment")
-        public List<Employee> findAllEmployeesGroupByDepartment() {
-            return employeeService.findAllEmployeesGroupByDepartment();
+        String result = employeeService.assignDepartment(employeeId, departmentId);
+
+        if (result.equals("Record Modified Successfully")) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
-
-        @GetMapping("/listAllManagerDetails")
-        public List<Employee> listAllManagerDetails() {
-            return employeeService.listAllManagerDetails();
-        }
-
-        @GetMapping("/locationwisecountofemployees")
-        public List<Employee> countAllEmployeesGroupByLocation() {
-            return employeeService.countAllEmployeesGroupByLocation();
-        }
-
-
-
-
-
-        @GetMapping("/findAllOpenPositions")
-        public List<Job> findAllOpenPositions() {
-            return employeeService.findAllOpenPositions();
-        }
-
-        @GetMapping("/findAllOpenPositions/{department_id}")
-        public List<Job> findAllOpenPositionsByDepartment(@PathVariable("department_id") BigDecimal departmentId) {
-            return employeeService.findAllOpenPositionsByDepartment(departmentId);
-        }
-
-        @GetMapping("/listallemployeebyhiredate/{from_hiredate}/{to_hiredate}")
-        public List<Employee> findAllEmployeesByHireDate(
-                @PathVariable("from_hiredate") LocalDate fromHireDate,
-                @PathVariable("to_hiredate") LocalDate toHireDate) {
-            return employeeService.findAllEmployeesByHireDate(fromHireDate, toHireDate);
-        }
-        */
-
-
-
+    }
 
 }
 
