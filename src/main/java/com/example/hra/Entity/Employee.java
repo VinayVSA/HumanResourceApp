@@ -1,6 +1,7 @@
 package com.example.hra.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,13 +11,15 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-@Entity
+
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Table(name = "employees")
+@Entity
 public class Employee {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,10 +56,25 @@ public class Employee {
     private Employee manager;
 
 
+
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
+    //default constructor for Jpa
+    public Employee()
+    {
+        super();
+    }
 
+/*@ManyToOne(fetch = FetchType.LAZY )
+    @JsonIgnore
+    @JoinColumn(name = "manager_id")
+    private Employee manager;*/
+
+/*
+    @OneToMany (mappedBy = "manager",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Employee> employees;*/
 }
 

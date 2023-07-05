@@ -14,7 +14,7 @@ public class RandomStringGenerator implements IdentifierGenerator {
         StringBuilder randomString = new StringBuilder();
         Random random = new Random();
 
-        while (randomString.length() < 7) {
+        while (randomString.length() < 8) {
             int index = random.nextInt(characters.length());
             randomString.append(characters.charAt(index));
         }

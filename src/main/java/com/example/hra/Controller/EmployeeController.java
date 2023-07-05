@@ -24,6 +24,12 @@ public class EmployeeController {
 
     //Service Methods
 
+    @GetMapping("")
+    public  List<Employee> allEmployees()
+    {
+        return employeeService.getAllEmployees();
+    }
+
     @PostMapping("")
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeService.addEmployee(employee);

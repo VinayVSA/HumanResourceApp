@@ -14,8 +14,8 @@ public interface DepartmentService {
     Map<String, BigDecimal> findMinSalaryByDepartmentId(BigDecimal departmentId);
 
     void deleteDepartment(BigDecimal departmentId);
-    List<Department> getAllDepartments();
+    //List<Department> getAllDepartments();
 
-   // List<Department> getDepartmentsByEmployee(BigDecimal employeeId);
+    List<Department> getDepartmentsByEmployeeId(BigDecimal employeeId);
 }
 

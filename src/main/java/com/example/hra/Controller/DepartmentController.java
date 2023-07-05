@@ -56,11 +56,11 @@ public class DepartmentController {
 
 
 
-    /*@GetMapping("/{empId}")
+    @GetMapping("/{employeeId}")
     public ResponseEntity<List<Department>> getDepartmentsByEmployee(@PathVariable("employeeId") BigDecimal employeeId) {
-        List<Department> departments = departmentService.getDepartmentsByEmployee(employeeId);
+        List<Department> departments = departmentService.getDepartmentsByEmployeeId(employeeId);
         return ResponseEntity.ok(departments);
-    }*/
+    }
 
 
 
@@ -69,9 +69,5 @@ public class DepartmentController {
         departmentService.deleteDepartment(departmentId);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping("")
-    public ResponseEntity<List<Department>> getAllEmployees() {
-        List<Department> departments = departmentService.getAllDepartments();
-        return ResponseEntity.ok(departments);
-    }
+
 }

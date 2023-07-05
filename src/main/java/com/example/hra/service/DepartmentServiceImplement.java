@@ -1,15 +1,15 @@
 package com.example.hra.service;
 
 import com.example.hra.Entity.Department;
+import com.example.hra.Entity.Employee;
 import com.example.hra.Repository.DepartmentRepository;
 import com.example.hra.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class DepartmentServiceImplement implements DepartmentService {
@@ -46,42 +46,59 @@ public class DepartmentServiceImplement implements DepartmentService {
     }
 
     @Override
-    public Map<String, BigDecimal> findMaxSalaryByDepartmentId(BigDecimal departmentId) {
-
+    @Transactional
+    public void deleteDepartment(BigDecimal departmentId) {
         Department department = departmentRepository.findByDepartmentId(departmentId);
-        Map<String, BigDecimal> result = new HashMap<>();
-        BigDecimal maxSalary = employeeRepository.findMaxSalaryByDepartment(department);
-        if (maxSalary != null)
+        if(department!=null)
         {
-            result.put(department.getDepartmentName(),maxSalary);
+            departmentRepository.deleteByDepartmentId(departmentId);
         }
-        return result;
+
+    }
+
+
+
+    @Override
+    public Map<String, BigDecimal> findMaxSalaryByDepartmentId(BigDecimal departmentId) {
+        Map<String,BigDecimal> hashMap = new HashMap<String, BigDecimal>() ;
+        Department department = departmentRepository.findByDepartmentId(departmentId);
+        List<Employee> employees = department.getEmployees();
+        BigDecimal max = employees.stream()
+                .map(Employee::getSalary)
+                .max(BigDecimal::compareTo)
+                .orElse(BigDecimal.ZERO);
+        hashMap.put(department.getDepartmentName(),max);
+        return hashMap;
+
     }
 
     @Override
     public Map<String, BigDecimal> findMinSalaryByDepartmentId(BigDecimal departmentId) {
+        Map<String,BigDecimal> hashMap = new HashMap<String, BigDecimal>() ;
         Department department = departmentRepository.findByDepartmentId(departmentId);
-        Map<String, BigDecimal> result = new HashMap<>();
-        BigDecimal minSalary = employeeRepository.findMinSalaryByDepartment(department);
-        if (minSalary != null)
+        List<Employee> employees = department.getEmployees();
+        BigDecimal min = employees.stream()
+                .map(Employee::getSalary)
+                .min(BigDecimal::compareTo)
+                .orElse(BigDecimal.ZERO);
+        hashMap.put(department.getDepartmentName(),min);
+        return hashMap;
+    }
+    @Override
+    public List<Department> getDepartmentsByEmployeeId(BigDecimal employeeId) {
+        Employee employee=employeeRepository.findByEmployeeId(employeeId);
+        List<Department> ls = new ArrayList<>();
+        if(employee!=null)
         {
-            result.put(department.getDepartmentName(),minSalary);
+            ls.add(employee.getDepartment());
+            return ls;
         }
-        return result;
-    }
-    /*@Override
-    public List<Department> getDepartmentsByEmployee(BigDecimal employeeId) {
-        return departmentRepository.findByEmployeeId(employeeId);
-    }*/
-
-    @Override
-    public void deleteDepartment(BigDecimal departmentId) {
-        departmentRepository.deleteByDepartmentId(departmentId);
+        return null;
     }
 
-    @Override
-    public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
-    }
+    //    @Override
+//    public List<Department> getAllDepartments() {
+//        return departmentRepository.findAll();
+//    }
 }
 

@@ -15,18 +15,19 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee,BigDecimal> {
 
 
-    BigDecimal findMinSalaryByDepartment(Department dep);
+    BigDecimal findMinSalaryOfEmployeeByDepartment(Department dep);
 
-    BigDecimal findMaxSalaryByDepartment(Department dep);
+    BigDecimal findMaxSalaryOfEmployeeByDepartment(Department dep);
 
     Employee findByFirstName(String firstName);
 
     Employee findByEmail(String email);
 
     Employee findByPhoneNumber(String phoneNumber);
-    
 
-    //List<Employee> findByDepartmentId(BigDecimal departmentId);
+
+    @Query("SELECT d FROM Department d WHERE d.departmentId = :departmentId")
+    List<Employee> findByDepartmentId(@Param("departmentId") BigDecimal departmentId);
 
 
     //List<Employee> findByHireDateBetween(LocalDate fromHireDate, LocalDate toHireDate);
