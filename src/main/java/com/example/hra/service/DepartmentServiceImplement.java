@@ -39,11 +39,7 @@ public class DepartmentServiceImplement implements DepartmentService {
         return "Record Modified Successfully";
     }
 
-    @Override
-    public Department getDepartmentById(BigDecimal departmentId) {
-        Department department = departmentRepository.findByDepartmentId(departmentId);
-        return department;
-    }
+
 
     @Override
     @Transactional
@@ -55,7 +51,6 @@ public class DepartmentServiceImplement implements DepartmentService {
         }
 
     }
-
 
 
     @Override
@@ -96,9 +91,9 @@ public class DepartmentServiceImplement implements DepartmentService {
         return null;
     }
 
-    //    @Override
-//    public List<Department> getAllDepartments() {
-//        return departmentRepository.findAll();
-//    }
+    @Override
+    public List<Department> getAllDepartments() {
+        return departmentRepository.findAll();
+   }
 }
 

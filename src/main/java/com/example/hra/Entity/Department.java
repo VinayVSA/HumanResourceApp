@@ -32,11 +32,11 @@ public class Department {
     private BigDecimal managerId;
 
     @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "manager_id", referencedColumnName = "employee_id", insertable = false, updatable = false)
+    @JoinColumn(name = "manager_id", referencedColumnName = "employee_id",insertable = false,updatable = false)
     private Employee employee;
 
     @OneToMany(mappedBy = "department")
+    @JsonManagedReference
     private List<Employee> employees;
 
     @ManyToOne

@@ -69,5 +69,9 @@ public class DepartmentController {
         departmentService.deleteDepartment(departmentId);
         return ResponseEntity.noContent().build();
     }
-
+    @GetMapping("")
+    public ResponseEntity<List<Department>> getAllEmployees() {
+        List<Department> departments = departmentService.getAllDepartments();
+        return ResponseEntity.ok(departments);
+    }
 }

@@ -22,9 +22,9 @@ public class JobHistoryController {
         this.jobHistoryService = jobHistoryService;
     }
 
-    @PostMapping("/{empid}/{startdate}/{job_id}/{department_id}")
-    public ResponseEntity<String> addJobHistoryEntry(@PathVariable("empid") BigDecimal employeeId,
-                                                     @PathVariable("startdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    @PostMapping("/{employee_id}/{start_date}/{job_id}/{department_id}")
+    public ResponseEntity<String> addJobHistoryEntry(@PathVariable("employee_id") BigDecimal employeeId,
+                                                     @PathVariable("start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                                                      @PathVariable("job_id") String jobId,
                                                      @PathVariable("department_id") BigDecimal departmentId) {
         JobHistory jobHistory = jobHistoryService.createJobHistoryEntry(employeeId, startDate, jobId, departmentId);

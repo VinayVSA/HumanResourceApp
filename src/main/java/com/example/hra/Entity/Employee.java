@@ -20,6 +20,7 @@ import java.util.List;
 
 @Table(name = "employees")
 @Entity
+
 public class Employee {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,23 +60,16 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @JsonBackReference
     private Department department;
-
-    //default constructor for Jpa
 
     public Employee()
     {
         super();
     }
 
-/*@ManyToOne(fetch = FetchType.LAZY )
-    @JsonIgnore
-    @JoinColumn(name = "manager_id")
-    private Employee manager;*/
-
-/*
     @OneToMany (mappedBy = "manager",cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Employee> employees;*/
+    private List<Employee> employees;
 }
 

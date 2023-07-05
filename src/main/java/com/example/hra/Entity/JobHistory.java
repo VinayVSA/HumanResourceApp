@@ -27,11 +27,11 @@ public class JobHistory implements Serializable {
     private Employee employee;
 
     @ManyToOne
-    @JoinColumn(name = "job_id")
+    @JoinColumn(name = "job_id",insertable = false, updatable = false)
     private Job job;
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "department_id",insertable = false, updatable = false)
     private Department department;
 
 
@@ -40,7 +40,6 @@ public class JobHistory implements Serializable {
 
     @Column(name = "end_date")
     private Date endDate;
-
 
 }
 

@@ -9,12 +9,11 @@ import java.util.Map;
 public interface DepartmentService {
     String addDepartment(Department department);
     String modifyDepartment(Department department);
-    Department getDepartmentById(BigDecimal departmentId);
     Map<String, BigDecimal> findMaxSalaryByDepartmentId(BigDecimal departmentId);
     Map<String, BigDecimal> findMinSalaryByDepartmentId(BigDecimal departmentId);
 
     void deleteDepartment(BigDecimal departmentId);
-    //List<Department> getAllDepartments();
+    List<Department> getAllDepartments();
 
     List<Department> getDepartmentsByEmployeeId(BigDecimal employeeId);
 }

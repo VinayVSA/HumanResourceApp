@@ -8,18 +8,23 @@ import java.util.Random;
 
 public class RandomStringGenerator implements IdentifierGenerator {
 
+
+
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder randomString = new StringBuilder();
         Random random = new Random();
 
-        while (randomString.length() < 8) {
+
+
+        while (randomString.length() < 10) {
             int index = random.nextInt(characters.length());
             randomString.append(characters.charAt(index));
         }
 
+
+
         return randomString.toString();
     }
 }
-

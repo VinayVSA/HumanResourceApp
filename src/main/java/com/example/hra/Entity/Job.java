@@ -17,9 +17,9 @@ import java.math.BigDecimal;
 @Table(name = "jobs")
 public class Job {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "com.example.hra.Entity.RandomStringGenerator")
-    @Column(name = "job_id", length=7)
+    @GeneratedValue(generator = "randomStringGenerator")
+    @GenericGenerator(name = "randomStringGenerator", strategy = "com.example.hra.Entity.RandomStringGenerator")
+    @Column(name = "job_id", length=10)
     private String jobId;
 
     @Column(name = "job_title")
