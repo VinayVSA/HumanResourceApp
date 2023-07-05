@@ -62,6 +62,7 @@ public class Employee {
     private Department department;
 
     //default constructor for Jpa
+
     public Employee()
     {
         super();
