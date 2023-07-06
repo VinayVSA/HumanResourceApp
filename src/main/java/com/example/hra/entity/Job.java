@@ -1,21 +1,20 @@
 package com.example.hra.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "jobs")
-public class Job {
+public class Job  {
     @Id
     @GeneratedValue(generator = "randomStringGenerator")
     @GenericGenerator(name = "randomStringGenerator", strategy = "com.example.hra.entity.RandomStringGenerator")

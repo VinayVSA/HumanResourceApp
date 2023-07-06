@@ -19,14 +19,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/employees")
 public class EmployeeController {
-
     private EmployeeService employeeService;
-
     @Autowired
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-
 
     //Service Methods
 
@@ -37,8 +34,9 @@ public class EmployeeController {
     }
 
     @PostMapping("")
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+        Employee employee1= employeeService.addEmployee(employee);
+        return new ResponseEntity<>(employee1,HttpStatus.OK);
     }
 
     @PutMapping("")

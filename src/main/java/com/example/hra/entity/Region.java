@@ -1,9 +1,6 @@
 package com.example.hra.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name="regions")
 @Setter
+@ToString
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,9 +1,6 @@
 package com.example.hra.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -15,6 +12,8 @@ import java.util.Objects;
 
 @Embeddable
 @Getter
+@ToString
+
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +25,7 @@ public class JobHistoryId implements Serializable {
     @Column(name = "start_date")
     private Date startDate;
 
+
     // Equals and hashCode methods
 
     @Override
@@ -33,8 +33,7 @@ public class JobHistoryId implements Serializable {
         if (this == o) return true;
         if (!(o instanceof JobHistoryId)) return false;
         JobHistoryId that = (JobHistoryId) o;
-        return Objects.equals(getEmployeeId(), that.getEmployeeId()) &&
-                Objects.equals(getStartDate(), that.getStartDate());
+        return Objects.equals(getEmployeeId(), that.getEmployeeId());
     }
 
     @Override

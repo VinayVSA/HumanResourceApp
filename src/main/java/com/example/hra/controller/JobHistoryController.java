@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/job_history")
@@ -24,13 +27,49 @@ public class JobHistoryController {
     @PostMapping("/{employee_id}/{start_date}/{job_id}/{department_id}")
     public ResponseEntity<String> addJobHistoryEntry(@PathVariable("employee_id") BigDecimal employeeId,
                                                      @PathVariable("start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-                                                     @PathVariable("job_id") String jobId,
-                                                     @PathVariable("department_id") BigDecimal departmentId) {
-        String jobHistory = jobHistoryService.createJobHistoryEntry(employeeId, startDate, jobId, departmentId);
+                                                     @PathVariable String job_id,@PathVariable("department_id") BigDecimal departmentId) {
+        String jobHistory = jobHistoryService.createJobHistoryEntry(employeeId,job_id, startDate, departmentId);
         if (jobHistory.equals("Record Created Successfully")) {
             return ResponseEntity.ok(jobHistory);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Validation failed");
     }
+
+    @PutMapping("/{employee_id}/{end_date}")
+    public ResponseEntity<String> modifyJobHistory(
+            @PathVariable("employee_id") BigDecimal employeeId,
+            @PathVariable("end_date")@DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+
+        String result = jobHistoryService.modifyJobHistory(employeeId, endDate);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/totalyearsofexperience/{emp_id}")
+    public ResponseEntity<Map<String, Integer>> findExperienceOfEmployee(
+            @PathVariable("emp_id") BigDecimal employeeId) {
+
+        Map<String, Integer> experienceMap = jobHistoryService.findExperienceOfEmployee(employeeId);
+
+        return ResponseEntity.ok(experienceMap);
+    }
+
+    @GetMapping("/lessthanoneyearexperience/{emp_id}")
+    public ResponseEntity<Map<String, Long>> getEmployeeExperience(
+            @PathVariable("emp_id") BigDecimal employeeId) {
+
+        Duration duration = jobHistoryService.getEmployeeExperience(employeeId);
+
+        long years = duration.toDays() / 365;
+        long months = (duration.toDays() % 365) / 30;
+        long days = duration.toDays() % 30;
+
+        Map<String, Long> result = new HashMap<>();
+        result.put("years", years);
+        result.put("months", months);
+        result.put("days", days);
+
+        return ResponseEntity.ok(result);
+    }
+
 
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
-
+@ToString
 @Table(name = "employees")
 @Entity
 
@@ -53,9 +54,6 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private Employee manager;
-
-
-
     @ManyToOne
     @JoinColumn(name = "department_id")
     @JsonBackReference
