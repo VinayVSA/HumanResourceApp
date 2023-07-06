@@ -1,4 +1,4 @@
-package com.example.hra.Entity;
+package com.example.hra.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +33,6 @@ public class JobHistory implements Serializable {
     @ManyToOne
     @JoinColumn(name = "department_id",insertable = false, updatable = false)
     private Department department;
-
 
     @Column(name = "start_date",insertable = false, updatable = false)
     private Date startDate;

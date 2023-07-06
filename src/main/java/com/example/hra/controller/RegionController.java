@@ -1,6 +1,6 @@
-package com.example.hra.Controller;
+package com.example.hra.controller;
 
-import com.example.hra.Entity.Region;
+import com.example.hra.entity.Region;
 import com.example.hra.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

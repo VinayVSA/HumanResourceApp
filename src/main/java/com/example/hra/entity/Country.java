@@ -1,4 +1,4 @@
-package com.example.hra.Entity;
+package com.example.hra.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,17 +19,16 @@ public class Country {
 
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "com.example.hra.Entity.RandomStringGenerator")
+    @GenericGenerator(name = "uuid", strategy = "com.example.hra.entity.RandomStringGenerator")
     @Column(name = "country_id", length = 4,columnDefinition = "char")
     private String countryId;
 
     @Column(name = "country_name")
     private String countryName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "region_id")
     private Region region;
-
 
 }
 

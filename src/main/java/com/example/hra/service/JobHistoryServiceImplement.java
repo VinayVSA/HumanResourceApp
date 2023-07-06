@@ -1,19 +1,15 @@
 package com.example.hra.service;
 
-import com.example.hra.Entity.*;
-import com.example.hra.Repository.DepartmentRepository;
-import com.example.hra.Repository.EmployeeRepository;
-import com.example.hra.Repository.JobHistoryRepository;
-import com.example.hra.Repository.JobRepository;
+import com.example.hra.entity.*;
+import com.example.hra.repository.DepartmentRepository;
+import com.example.hra.repository.EmployeeRepository;
+import com.example.hra.repository.JobHistoryRepository;
+import com.example.hra.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class JobHistoryServiceImplement implements JobHistoryService {
@@ -42,60 +38,29 @@ public class JobHistoryServiceImplement implements JobHistoryService {
     }
 
     @Override
-    public JobHistory createJobHistoryEntry(BigDecimal employeeId, Date startDate, String jobId, BigDecimal departmentId) {
+    public String createJobHistoryEntry(BigDecimal employeeId, Date startDate, String jobId, BigDecimal departmentId) {
         Employee employee = employeeRepository.findByEmployeeId(employeeId);
         Job job = jobRepository.findByJobId(jobId);
         Department department = departmentRepository.findByDepartmentId(departmentId);
 
-        if (employee != null && job != null && department != null) {
-            JobHistoryId jobHistoryId = new JobHistoryId(employeeId, startDate);
-            Date endDate= new Date();
-            JobHistory jobHistory = new JobHistory(jobHistoryId, employee, job, department, startDate,endDate);
-            return jobHistoryRepository.save(jobHistory);
+        if (employee == null || job == null || department == null) {
+            System.out.println("Employee, Job, or Department not found.");
+            return "Employee, Job, or Department not found.";
         }
-        return null;
-    }
 
-    @Override
-    public JobHistory updateJobHistoryEndDate(BigDecimal employeeId, Date endDate) {
-        Optional<JobHistory> jobHistoryOptional = jobHistoryRepository.findByIdEmployeeIdAndEndDateIsNull(employeeId);
-        if (jobHistoryOptional.isPresent()) {
-            JobHistory jobHistory = jobHistoryOptional.get();
-            jobHistory.setEndDate(endDate);
-            return jobHistoryRepository.save(jobHistory);
+        JobHistoryId jobHistoryId = new JobHistoryId(employeeId, startDate);
+        if (jobHistoryRepository.existsById(jobHistoryId)) {
+            System.out.println("Job history entry already exists for the given employee and start date.");
+            return "Job history entry already exists for the given employee and start date.";
         }
-        return null;
-    }
-/*
-    @Override
-    public Map<String, Integer> findExperienceOfEmployee(BigDecimal employeeId) {
-        Map<String, Integer> experienceMap = new HashMap<>();
 
-        Integer totalDays = jobHistoryRepository.calculateTotalDaysOfExperience(employeeId);
-        int years = totalDays / 365;
-        int months = (totalDays % 365) / 30;
-        int days = (totalDays % 365) % 30;
-
-        experienceMap.put("years", years);
-        experienceMap.put("months", months);
-        experienceMap.put("days", days);
-
-        return experienceMap;
+        // Create the new job history entry
+        Date endDate = new Date();
+        JobHistory jobHistory = new JobHistory(jobHistoryId, employee, job, department, startDate, endDate);
+        jobHistoryRepository.save(jobHistory);
+        return "Record Created Successfully";
     }
 
-    @Override
-    public Map<String, Integer> findEmployeesWithLessThanOneYearExperience() {
-        Map<String, Integer> experienceMap = new HashMap<>();
 
-        Integer totalDays = jobHistoryRepository.calculateTotalDaysOfExperienceForAllEmployees();
-        int years = totalDays / 365;
-        int months = (totalDays % 365) / 30;
-        int days = (totalDays % 365) % 30;
 
-        experienceMap.put("years", years);
-        experienceMap.put("months", months);
-        experienceMap.put("days", days);
-
-        return experienceMap;
-    }*/
 }

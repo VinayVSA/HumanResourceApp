@@ -1,12 +1,8 @@
-package com.example.hra.Repository;
+package com.example.hra.repository;
 
-import com.example.hra.Entity.Job;
+import com.example.hra.entity.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job,String> {

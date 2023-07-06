@@ -1,9 +1,10 @@
 package com.example.hra.service;
 
-import com.example.hra.Dto.DepartmentEmployeeCountDTO;
-import com.example.hra.Dto.TotalCommissionDTO;
-import com.example.hra.Entity.Employee;
-import com.example.hra.Entity.Job;
+import com.example.hra.dto.DepartmentEmployeeCountDTO;
+
+import com.example.hra.dto.TotalCommissionDTO;
+import com.example.hra.entity.Employee;
+import com.example.hra.entity.Job;
 
 import java.util.Date;
 import java.util.List;
@@ -44,5 +45,8 @@ public interface EmployeeService {
     String assignManager(BigDecimal employeeId, BigDecimal managerId);
 
     String assignDepartment(BigDecimal employeeId, BigDecimal departmentId);
+
+
+
 }
 

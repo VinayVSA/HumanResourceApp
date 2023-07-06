@@ -1,6 +1,6 @@
 package com.example.hra.service;
 
-import com.example.hra.Entity.Country;
+import com.example.hra.entity.Country;
 
 import java.util.List;
 

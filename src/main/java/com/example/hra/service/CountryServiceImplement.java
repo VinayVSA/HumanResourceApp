@@ -1,12 +1,11 @@
 package com.example.hra.service;
 
-import com.example.hra.Entity.Country;
-import com.example.hra.Repository.CountryRepository;
+import com.example.hra.entity.Country;
+import com.example.hra.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CountryServiceImplement implements CountryService {

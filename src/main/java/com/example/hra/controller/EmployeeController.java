@@ -1,9 +1,9 @@
-package com.example.hra.Controller;
+package com.example.hra.controller;
 
-import com.example.hra.Dto.DepartmentEmployeeCountDTO;
-import com.example.hra.Dto.TotalCommissionDTO;
-import com.example.hra.Entity.Employee;
-import com.example.hra.Entity.Job;
+import com.example.hra.dto.DepartmentEmployeeCountDTO;
+import com.example.hra.dto.TotalCommissionDTO;
+import com.example.hra.entity.Employee;
+import com.example.hra.entity.Job;
 import com.example.hra.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

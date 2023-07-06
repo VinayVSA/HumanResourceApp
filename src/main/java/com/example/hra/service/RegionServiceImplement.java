@@ -1,7 +1,7 @@
 package com.example.hra.service;
 
-import com.example.hra.Entity.Region;
-import com.example.hra.Repository.RegionRepository;
+import com.example.hra.entity.Region;
+import com.example.hra.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

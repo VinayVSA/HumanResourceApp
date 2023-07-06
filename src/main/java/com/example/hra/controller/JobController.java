@@ -1,6 +1,6 @@
-package com.example.hra.Controller;
+package com.example.hra.controller;
 
-import com.example.hra.Entity.Job;
+import com.example.hra.entity.Job;
 import com.example.hra.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

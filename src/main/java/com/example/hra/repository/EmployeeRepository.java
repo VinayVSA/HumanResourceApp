@@ -1,15 +1,14 @@
-package com.example.hra.Repository;
+package com.example.hra.repository;
 
-import com.example.hra.Entity.Department;
-import com.example.hra.Entity.Employee;
-import com.example.hra.Entity.Job;
+import com.example.hra.entity.Department;
+import com.example.hra.entity.Employee;
+import com.example.hra.entity.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -49,4 +48,5 @@ public interface EmployeeRepository extends JpaRepository<Employee,BigDecimal> {
 
     @Query("SELECT SUM(e.commissionPct) FROM Employee e WHERE e.department.departmentId = :departmentId")
     BigDecimal calculateTotalCommissionByDepartment(@Param("departmentId") BigDecimal departmentId);
+
 }

@@ -1,9 +1,9 @@
 package com.example.hra.service;
 
-import com.example.hra.Entity.Department;
-import com.example.hra.Entity.Employee;
-import com.example.hra.Repository.DepartmentRepository;
-import com.example.hra.Repository.EmployeeRepository;
+import com.example.hra.entity.Department;
+import com.example.hra.entity.Employee;
+import com.example.hra.repository.DepartmentRepository;
+import com.example.hra.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

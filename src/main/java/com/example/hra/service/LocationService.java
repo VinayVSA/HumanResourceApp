@@ -2,7 +2,7 @@ package com.example.hra.service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import com.example.hra.Entity.Location;
+import com.example.hra.entity.Location;
 
 public interface LocationService {
     void addLocation(Location location);

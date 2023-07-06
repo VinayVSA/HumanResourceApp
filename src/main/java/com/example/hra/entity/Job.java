@@ -1,4 +1,4 @@
-package com.example.hra.Entity;
+package com.example.hra.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class Job {
     @Id
     @GeneratedValue(generator = "randomStringGenerator")
-    @GenericGenerator(name = "randomStringGenerator", strategy = "com.example.hra.Entity.RandomStringGenerator")
+    @GenericGenerator(name = "randomStringGenerator", strategy = "com.example.hra.entity.RandomStringGenerator")
     @Column(name = "job_id", length=10)
     private String jobId;
 

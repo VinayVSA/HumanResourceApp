@@ -1,6 +1,6 @@
 package com.example.hra.service;
 
-import com.example.hra.Entity.Department;
+import com.example.hra.entity.Department;
 
 import java.math.BigDecimal;
 import java.util.List;

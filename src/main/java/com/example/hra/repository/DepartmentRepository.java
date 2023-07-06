@@ -1,13 +1,10 @@
-package com.example.hra.Repository;
+package com.example.hra.repository;
 
-import com.example.hra.Entity.Department;
-import com.example.hra.Entity.Employee;
+import com.example.hra.entity.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.util.EmptyStackException;
-import java.util.List;
 
 
 @Repository

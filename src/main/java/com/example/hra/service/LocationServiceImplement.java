@@ -1,7 +1,7 @@
 package com.example.hra.service;
 
-import com.example.hra.Entity.Location;
-import com.example.hra.Repository.LocationRepository;
+import com.example.hra.entity.Location;
+import com.example.hra.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

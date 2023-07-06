@@ -1,4 +1,4 @@
-package com.example.hra.Entity;
+package com.example.hra.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

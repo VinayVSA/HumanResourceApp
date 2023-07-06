@@ -1,6 +1,6 @@
-package com.example.hra.Controller;
+package com.example.hra.controller;
 
-import com.example.hra.Entity.Country;
+import com.example.hra.entity.Country;
 import com.example.hra.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

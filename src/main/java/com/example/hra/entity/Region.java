@@ -1,4 +1,4 @@
-package com.example.hra.Entity;
+package com.example.hra.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,8 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity

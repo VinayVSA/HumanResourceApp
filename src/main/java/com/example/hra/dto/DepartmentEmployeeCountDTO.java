@@ -1,4 +1,4 @@
-package com.example.hra.Dto;
+package com.example.hra.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

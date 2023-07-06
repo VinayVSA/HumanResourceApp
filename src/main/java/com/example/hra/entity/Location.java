@@ -1,4 +1,4 @@
-package com.example.hra.Entity;
+package com.example.hra.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class Location {
     @Column(name = "state_province")
     private String stateProvince;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "country_id")
     private Country country;
 

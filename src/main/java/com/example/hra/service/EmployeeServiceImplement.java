@@ -1,16 +1,17 @@
 package com.example.hra.service;
 
-import com.example.hra.Dto.DepartmentEmployeeCountDTO;
-import com.example.hra.Dto.TotalCommissionDTO;
-import com.example.hra.Entity.Department;
-import com.example.hra.Entity.Employee;
-import com.example.hra.Entity.Job;
-import com.example.hra.Repository.DepartmentRepository;
-import com.example.hra.Repository.EmployeeRepository;
-import com.example.hra.Repository.JobRepository;
+import com.example.hra.dto.DepartmentEmployeeCountDTO;
+import com.example.hra.dto.TotalCommissionDTO;
+import com.example.hra.entity.Department;
+import com.example.hra.entity.Employee;
+import com.example.hra.entity.Job;
+import com.example.hra.repository.DepartmentRepository;
+import com.example.hra.repository.EmployeeRepository;
+import com.example.hra.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,7 +24,14 @@ public class EmployeeServiceImplement implements EmployeeService {
         private JobRepository jobRepository;
         private DepartmentRepository departmentRepository;
 
+        private EntityManager entityManager;
+
         @Autowired
+        public void setEntityManager(EntityManager entityManager) {
+            this.entityManager = entityManager;
+        }
+
+    @Autowired
         public void setJobRepository(JobRepository jobRepository) {
             this.jobRepository = jobRepository;
         }
@@ -273,6 +281,7 @@ public class EmployeeServiceImplement implements EmployeeService {
 
         return "Record Modified Successfully";
     }
+
 
     @Override
     public List<Employee> getAllEmployees() {

@@ -1,7 +1,7 @@
 package com.example.hra.service;
 
-import com.example.hra.Entity.Job;
-import com.example.hra.Repository.JobRepository;
+import com.example.hra.entity.Job;
+import com.example.hra.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.example.hra.Repository;
+package com.example.hra.repository;
 
-import com.example.hra.Entity.Region;
+import com.example.hra.entity.Region;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
