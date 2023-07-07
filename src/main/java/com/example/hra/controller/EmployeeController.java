@@ -50,7 +50,7 @@ public class EmployeeController {
 
     }
     @GetMapping("/findfname/{firstname}")
-    public Employee findByFirstName(@PathVariable("firstname") String firstName) {
+    public List<Employee> findByFirstName(@PathVariable("firstname") String firstName) {
         return employeeService.findByFirstName(firstName);
     }
 

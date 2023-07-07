@@ -16,7 +16,7 @@ public interface EmployeeService {
     Employee addEmployee(Employee employee);
     Employee updateEmployee(Employee employee);
     Employee assignJobToEmployee(BigDecimal employeeId, String jobId);
-    Employee findByFirstName(String firstName);
+    List<Employee> findByFirstName(String firstName);
     Employee findByEmail(String email);
     Employee findByPhoneNumber(String phoneNumber);
     void deleteEmployee(BigDecimal employeeId);

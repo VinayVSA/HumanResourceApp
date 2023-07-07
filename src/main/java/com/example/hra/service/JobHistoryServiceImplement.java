@@ -1,6 +1,8 @@
 package com.example.hra.service;
 
 import com.example.hra.entity.*;
+import com.example.hra.exception.DepartmentNotFoundException;
+import com.example.hra.exception.EmployeeNotFoundException;
 import com.example.hra.repository.DepartmentRepository;
 import com.example.hra.repository.EmployeeRepository;
 import com.example.hra.repository.JobHistoryRepository;
@@ -43,8 +45,8 @@ public class JobHistoryServiceImplement implements JobHistoryService {
 
     @Override
     public String createJobHistoryEntry(BigDecimal employeeId,String jobId, Date startDate, BigDecimal departmentId) {
-        Employee employee = employeeRepository.findByEmployeeId(employeeId);
-        Department department = departmentRepository.findByDepartmentId(departmentId);
+        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
+        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
 
         if (employee == null  || department == null) {
             System.out.println("Employee, Job, or Department not found.");
@@ -77,8 +79,7 @@ public class JobHistoryServiceImplement implements JobHistoryService {
     public String modifyJobHistory(BigDecimal employeeId, Date endDate) {
         // Find the job history entry based on employeeId and endDate
         String s = new String();
-        Employee employee = employeeRepository.findByEmployeeId(employeeId);
-
+        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
         List<JobHistory> jobHistory = jobHistoryRepository.findAll();
         for (JobHistory j:jobHistory) {
             Employee employee1 = j.getEmployee();

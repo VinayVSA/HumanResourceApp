@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 
 @Repository
@@ -15,7 +16,7 @@ public interface DepartmentRepository extends JpaRepository<Department,BigDecima
     //List<Employee> findByEmployeeDepartmentId(BigDecimal department_id);
     void deleteByDepartmentId(BigDecimal departmentId);
 
-    Department findByDepartmentId(BigDecimal departmentId);
+    Optional<Department> findByDepartmentId(BigDecimal departmentId);
 
   //  List<Department> findByEmployeeId(BigDecimal employeeId);
 

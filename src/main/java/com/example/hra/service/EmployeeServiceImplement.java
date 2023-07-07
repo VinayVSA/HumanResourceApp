@@ -1,11 +1,12 @@
 package com.example.hra.service;
-
 import com.example.hra.dto.DepartmentEmployeeCountDTO;
 import com.example.hra.dto.TotalCommissionDTO;
 import com.example.hra.entity.Department;
 import com.example.hra.entity.Employee;
 import com.example.hra.entity.Job;
+import com.example.hra.exception.DepartmentNotFoundException;
 import com.example.hra.exception.EmployeeNotFoundException;
+import com.example.hra.exception.JobNotFoundException;
 import com.example.hra.repository.DepartmentRepository;
 import com.example.hra.repository.EmployeeRepository;
 import com.example.hra.repository.JobRepository;
@@ -14,8 +15,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-
-
 @Service
 public class EmployeeServiceImplement implements EmployeeService {
 
@@ -34,93 +33,54 @@ public class EmployeeServiceImplement implements EmployeeService {
         public void setDepartmentRepository(DepartmentRepository departmentRepository) {
             this.departmentRepository = departmentRepository;
         }
-
-
     @Override
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
     @Override
     public Employee updateEmployee(Employee employee) {
-        Employee employee1 = employeeRepository.findByEmployeeId(employee.getEmployeeId());
-        if(employee1==null)
-        {
-            throw new EmployeeNotFoundException("Employee Not Found");
-        }
+        employeeRepository.findByEmployeeId(employee.getEmployeeId()).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
         return employeeRepository.save(employee);
     }
     @Override
     public Employee assignJobToEmployee(BigDecimal employeeId, String jobId) {
-        Employee employee = employeeRepository.getEmployeeByEmployeeId(employeeId);
-        Job job = jobRepository.findByJobId(jobId);
-        if (employee != null && job != null) {
-            employee.setJob(job);
-            return employeeRepository.save(employee);
-        }
-        else {
-            throw new EmployeeNotFoundException("Employee or Job Not Found");
-        }
+        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
+        Job job = jobRepository.findByJobId(jobId).orElseThrow(()->new JobNotFoundException("Job Not Found"));
+        employee.setJob(job);
+        return employeeRepository.save(employee);
     }
         @Override
         public Employee assignDepartmentAndSalesPercentage(BigDecimal employeeId, BigDecimal departmentId, BigDecimal salesPercentage) {
-            Employee employee = employeeRepository.findById(employeeId).orElse(null);
-            Department department = departmentRepository.findById(departmentId).orElse(null);
-            if (employee != null && department != null) {
-                employee.setDepartment(department);
-                employee.setCommissionPct(salesPercentage);
-                return employeeRepository.save(employee);
-            }
-            else
-            {
-                throw new EmployeeNotFoundException("Employee or Department Not Found");
-            }
+            Employee employee = employeeRepository.findById(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
+            Department department = departmentRepository.findById(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
+            employee.setDepartment(department);
+            employee.setCommissionPct(salesPercentage);
+            return employeeRepository.save(employee);
         }
         @Override
-        public Employee findByFirstName(String firstName) {
-            Employee employee =  employeeRepository.findByFirstName(firstName);
-            if(employee==null)
-            {
-                throw new EmployeeNotFoundException("Employee Not Found");
-            }
-            return employee;
+        public List<Employee> findByFirstName(String firstName) {
+           return employeeRepository.findByFirstName(firstName).orElseThrow(()->new EmployeeNotFoundException(""));
         }
         @Override
         public Employee findByEmail(String email) {
-            Employee employee = employeeRepository.findByPhoneNumber(email);
-            if(employee==null)
-            {
-                throw new EmployeeNotFoundException("Employee Not Found");
-            }
-            return employeeRepository.findByEmail(email);
+            return employeeRepository.findByEmail(email).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
         }
         @Override
         public Employee findByPhoneNumber(String phoneNumber) {
-            Employee employee = employeeRepository.findByPhoneNumber(phoneNumber);
-            if(employee==null)
-            {
-                throw new EmployeeNotFoundException("Employee Not Found");
-            }
-            return employeeRepository.findByPhoneNumber(phoneNumber);
+            return employeeRepository.findByPhoneNumber(phoneNumber).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
         }
     @Override
     public Map<String,BigDecimal> findMaxSalaryOfJobByEmployeeId(BigDecimal employeeId) {
-            Employee employee = employeeRepository.findByEmployeeId(employeeId);
+            Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
             Map<String,BigDecimal> mp = new HashMap<>();
-            if(employee!=null)
-            {
-                Job job = employee.getJob();
-                BigDecimal maxSalary = job.getMaxSalary();
-                String title = job.getJobTitle();
-                mp.put(title,maxSalary);
-                return mp;
-            }
-            else
-            {
-             throw new EmployeeNotFoundException("Employee Not Found");
-            }
+            Job job = employee.getJob();
+            BigDecimal maxSalary = job.getMaxSalary();
+            String title = job.getJobTitle();
+            mp.put(title,maxSalary);
+            return mp;
     }
     public List<Employee> findAllEmployeesByDepartmentId(BigDecimal departmentId) {
-        Department department = departmentRepository.findByDepartmentId(departmentId);
+        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
         List<Employee> employees = department.getEmployees();
         if(employees.isEmpty())
         {
@@ -136,44 +96,23 @@ public class EmployeeServiceImplement implements EmployeeService {
     }
     @Override
     public List<Employee> findAllEmployeesWithNoCommission() {
-        List<Employee> employees = employeeRepository.findByCommissionPctIsNull();
-        if(employees.isEmpty())
-        {
-            throw new EmployeeNotFoundException("Employees Not Found");
+        return employeeRepository.findByCommissionPctIsNull().orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
         }
-        return employees;
-    }
         @Override
         public Employee updateEmployeeEmailByEmployeeId(String email,BigDecimal employeeId) {
-            Employee employee = employeeRepository.findByEmployeeId(employeeId);
-            if (employee != null) {
-                employee.setEmail(email);
-                return employeeRepository.save(employee);
-            }
-            else
-            {
-                throw new EmployeeNotFoundException("Employee Not Found");
-            }
+            Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
+            employee.setEmail(email);
+            return employeeRepository.save(employee);
         }
         @Override
         public Employee updateEmployeePhoneNumberByEmployeeId( String phoneNumber,BigDecimal employeeId) {
-            Employee employee = employeeRepository.findByEmployeeId(employeeId);
-            if (employee != null) {
-                employee.setPhoneNumber(phoneNumber);
-                return employeeRepository.save(employee);
-            }
-            else
-            {
-                throw new EmployeeNotFoundException("Employee Not Found");
-            }
+            Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
+            employee.setPhoneNumber(phoneNumber);
+            return employeeRepository.save(employee);
         }
         @Override
         public void deleteEmployee(BigDecimal employeeId) {
-            Employee employee = employeeRepository.findByEmployeeId(employeeId);
-            if(employee==null)
-            {
-                    throw new EmployeeNotFoundException("Employee Not Found");
-            }
+            employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
             try
             {
                 employeeRepository.deleteById(employeeId);
@@ -182,9 +121,7 @@ public class EmployeeServiceImplement implements EmployeeService {
             {
                 throw new EmployeeNotFoundException("Employee Can't be Deleted");
             }
-
         }
-
     @Override
     public List<Employee> listAllManagerDetails() {
         List<Employee> employees = employeeRepository.findAll();
@@ -200,7 +137,6 @@ public class EmployeeServiceImplement implements EmployeeService {
                 .collect(Collectors.toList());
         return employees1;
     }
-
     @Override
     public List<Job> findAllOpenPositions() {
         int count = 0;
@@ -232,13 +168,12 @@ public class EmployeeServiceImplement implements EmployeeService {
        }
        return employees;
     }
-
     @Override
     public List<Job> findAllOpenPositions(BigDecimal departmentId) {
         int count = 0;
         List<Job> allJobs = jobRepository.findAll();
         List<Job> openPositions = new ArrayList<>();
-        Department department = departmentRepository.findByDepartmentId(departmentId);
+        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow();
         if(department==null)
         {
             throw new EmployeeNotFoundException("Department Not Found");
@@ -269,24 +204,16 @@ public class EmployeeServiceImplement implements EmployeeService {
         return employeeRepository.findAllByHireDateBetween(fromHireDate, toHireDate);
     }
     public TotalCommissionDTO findTotalCommissionIssuedToEmployeeByDepartment(BigDecimal departmentId) {
-            Department department = departmentRepository.findByDepartmentId(departmentId);
-            if(department==null)
-            {
-                throw new EmployeeNotFoundException("Department Not Found");
-            }
+        departmentRepository.findByDepartmentId(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
         BigDecimal totalCommission = employeeRepository.calculateTotalCommissionByDepartment(departmentId);
         TotalCommissionDTO commissionDTO = new TotalCommissionDTO(departmentId, totalCommission);
         return commissionDTO;
     }
 
     public String assignDepartmentAndUpdateSalesPercentage(BigDecimal departmentId, BigDecimal salesPercentage) {
-        Optional<Department> optionalDepartment = departmentRepository.findById(departmentId);
-        if (optionalDepartment.isEmpty()) {
-            throw new EmployeeNotFoundException("Department not found.");
-        }
-        Department department = optionalDepartment.get();
+        Department department=departmentRepository.findByDepartmentId(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
         if (!department.getDepartmentName().equalsIgnoreCase("Sales")) {
-            throw new EmployeeNotFoundException("Only employees from the Sales department can have their sales percentage updated.");
+            throw new DepartmentNotFoundException("Only employees from the Sales department can have their sales percentage updated.");
         }
         List<Employee> salesEmployees = department.getEmployees();
         if (salesEmployees.isEmpty()) {
@@ -304,14 +231,9 @@ public class EmployeeServiceImplement implements EmployeeService {
     }
     @Override
     public String assignManager(BigDecimal employeeId, BigDecimal managerId) {
-        Employee employee = employeeRepository.findByEmployeeId(employeeId);
-        Employee manager = employeeRepository.findByEmployeeId(managerId);
-        System.out.println(employee.getFirstName());
-        System.out.println(manager.getFirstName());
-        if (employee==null || manager==null) {
-            throw new EmployeeNotFoundException("Employee or Manager not found.");
-        }
-        if (employee.getFirstName().equals(manager.getFirstName())){
+        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
+        Employee manager = employeeRepository.findByEmployeeId(managerId).orElseThrow(()->new EmployeeNotFoundException("Manager Not Found"));
+        if (employee.getEmployeeId().equals(manager.getEmployeeId())){
             throw new EmployeeNotFoundException("Cannot assign employee as their own manager.");
         }
         employee.setManager(manager);
@@ -320,21 +242,14 @@ public class EmployeeServiceImplement implements EmployeeService {
     }
     @Override
     public String assignDepartment(BigDecimal employeeId, BigDecimal departmentId) {
-        Employee employee = employeeRepository.findByEmployeeId(employeeId);
-        Department department = departmentRepository.findByDepartmentId(departmentId);
-        if (employee==null || department==null) {
-            throw new EmployeeNotFoundException("Employee or Department not found.");
-        }
+        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
+        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
         employee.setDepartment(department);
         employeeRepository.save(employee);
-
         return "Record Modified Successfully";
     }
-
     @Override
     public List<Employee> getAllEmployees() {
-
         return employeeRepository.findAll();
     }
-
 }

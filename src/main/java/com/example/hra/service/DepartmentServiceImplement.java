@@ -2,6 +2,8 @@ package com.example.hra.service;
 
 import com.example.hra.entity.Department;
 import com.example.hra.entity.Employee;
+import com.example.hra.exception.DepartmentNotFoundException;
+import com.example.hra.exception.EmployeeNotFoundException;
 import com.example.hra.repository.DepartmentRepository;
 import com.example.hra.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +28,15 @@ public class DepartmentServiceImplement implements DepartmentService {
     public void setDepartmentRepository(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
     }
-
     @Override
     public String addDepartment(Department department) {
         departmentRepository.save(department);
         return "Record Created Successfully";
     }
-
     @Override
     public String modifyDepartment(Department department) {
-        departmentRepository.save(department);
+        Department department1 = departmentRepository.findByDepartmentId(department.getDepartmentId()).orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
+        departmentRepository.save(department1);
         return "Record Modified Successfully";
     }
 
@@ -44,19 +45,15 @@ public class DepartmentServiceImplement implements DepartmentService {
     @Override
     @Transactional
     public void deleteDepartment(BigDecimal departmentId) {
-        Department department = departmentRepository.findByDepartmentId(departmentId);
-        if(department!=null)
-        {
-            departmentRepository.deleteByDepartmentId(departmentId);
-        }
-
+        departmentRepository.findByDepartmentId(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
+        departmentRepository.deleteByDepartmentId(departmentId);
     }
 
 
     @Override
     public Map<String, BigDecimal> findMaxSalaryByDepartmentId(BigDecimal departmentId) {
         Map<String,BigDecimal> hashMap = new HashMap<String, BigDecimal>() ;
-        Department department = departmentRepository.findByDepartmentId(departmentId);
+        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
         List<Employee> employees = department.getEmployees();
         BigDecimal max = employees.stream()
                 .map(Employee::getSalary)
@@ -70,7 +67,7 @@ public class DepartmentServiceImplement implements DepartmentService {
     @Override
     public Map<String, BigDecimal> findMinSalaryByDepartmentId(BigDecimal departmentId) {
         Map<String,BigDecimal> hashMap = new HashMap<String, BigDecimal>() ;
-        Department department = departmentRepository.findByDepartmentId(departmentId);
+        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(()->new DepartmentNotFoundException("Department Not Found"));
         List<Employee> employees = department.getEmployees();
         BigDecimal min = employees.stream()
                 .map(Employee::getSalary)
@@ -81,16 +78,11 @@ public class DepartmentServiceImplement implements DepartmentService {
     }
     @Override
     public List<Department> getDepartmentsByEmployeeId(BigDecimal employeeId) {
-        Employee employee=employeeRepository.findByEmployeeId(employeeId);
+        Employee employee=employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
         List<Department> ls = new ArrayList<>();
-        if(employee!=null)
-        {
-            ls.add(employee.getDepartment());
-            return ls;
-        }
-        return null;
+        ls.add(employee.getDepartment());
+        return ls;
     }
-
     @Override
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();

@@ -17,7 +17,7 @@ public class Country {
 
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "com.example.hra.entity.RandomStringGenerator")
+    @GenericGenerator(name = "uuid", strategy = "com.example.hra.entity.CountryIdGenerator")
     @Column(name = "country_id", length = 4,columnDefinition = "char")
     private String countryId;
 
