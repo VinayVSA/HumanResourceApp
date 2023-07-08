@@ -54,10 +54,10 @@ public class JobHistoryController {
     }
 
     @GetMapping("/lessthanoneyearexperience/{emp_id}")
-    public ResponseEntity<Map<String, Long>> getEmployeeExperience(
+    public ResponseEntity<Map<String, Long>> getEmployeeExperienceLessThanOneYear(
             @PathVariable("emp_id") BigDecimal employeeId) {
 
-        Duration duration = jobHistoryService.getEmployeeExperience(employeeId);
+        Duration duration = jobHistoryService.getEmployeeExperienceLessThanOneYear(employeeId);
 
         long years = duration.toDays() / 365;
         long months = (duration.toDays() % 365) / 30;

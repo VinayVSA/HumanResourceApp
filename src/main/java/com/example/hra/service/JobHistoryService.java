@@ -12,5 +12,5 @@ public interface JobHistoryService {
 
     Map<String, Integer> findExperienceOfEmployee(BigDecimal employeeId);
 
-    Duration getEmployeeExperience(BigDecimal employeeId);
+    Duration getEmployeeExperienceLessThanOneYear(BigDecimal employeeId);
 }

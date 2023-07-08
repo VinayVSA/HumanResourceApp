@@ -20,7 +20,7 @@ public class LocationServiceImplement implements LocationService {
     }
     @Override
     public void updateLocation(Location location) {
-       Location location1=(Location)locationRepository.findByLocationId(location.getLocationId()).orElseThrow(()->new LocationNotFoundException("Location Not Found"));
+       Location location1=locationRepository.findByLocationId(location.getLocationId()).orElseThrow(()->new LocationNotFoundException("Location Not Found"));
         location1.setLocationId(location.getLocationId());
         location1.setStreetAddress(location.getStreetAddress());
         location1.setCity(location.getCity());
@@ -31,15 +31,10 @@ public class LocationServiceImplement implements LocationService {
     }
     @Override
     public List<Location> getAllLocations() {
-        List<Location> locations = locationRepository.findAll();
-        if(locations.isEmpty())
-            throw new LocationNotFoundException("Locations Not Found");
-        return locations;
-    }
+        return locationRepository.findAll();}
     @Override
     public Location getLocationById(BigDecimal locationId) {
-        return (Location) locationRepository.findByLocationId(locationId).orElseThrow(()->new LocationNotFoundException("Location Not Found"));
-    }
+        return locationRepository.findByLocationId(locationId).orElseThrow(()->new LocationNotFoundException("Location Not Found"));}
     @Override
     @Transactional
     public String deleteByLocationId(BigDecimal locationId) {

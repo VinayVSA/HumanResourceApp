@@ -25,7 +25,11 @@ public class JobHistoryId implements Serializable {
     @Column(name = "start_date")
     private Date startDate;
 
+    @Column(name="job_id")
+    private String jobId;
 
+    @Column(name = "department_Id")
+    private BigDecimal departmentId;
     // Equals and hashCode methods
 
     @Override

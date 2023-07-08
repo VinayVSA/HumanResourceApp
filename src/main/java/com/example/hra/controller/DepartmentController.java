@@ -66,7 +66,7 @@ public class DepartmentController {
 
     @DeleteMapping("/{departmentId}")
     public ResponseEntity<Void> deleteDepartment(@PathVariable("departmentId") BigDecimal departmentId) {
-        departmentService.deleteDepartment(departmentId);
+        departmentService.deleteDepartmentById(departmentId);
         return ResponseEntity.noContent().build();
     }
     @GetMapping("")

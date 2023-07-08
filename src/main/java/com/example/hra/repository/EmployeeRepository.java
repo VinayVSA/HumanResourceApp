@@ -23,5 +23,4 @@ public interface EmployeeRepository extends JpaRepository<Employee,BigDecimal> {
     List<Employee> findAllByHireDateBetween(Date fromHireDate, Date toHireDate);
     @Query("SELECT SUM(e.commissionPct) FROM Employee e WHERE e.department.departmentId = :departmentId")
     BigDecimal calculateTotalCommissionByDepartment(@Param("departmentId") BigDecimal departmentId);
-
 }
