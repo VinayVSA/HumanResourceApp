@@ -76,9 +76,8 @@ public class JobHistoryServiceImplement implements JobHistoryService {
                 jobHistoryRepository.save(j);
                 break;
             }
-            else {
+            else
                 s = "Not Updated";
-            }
         }
         return s;
     }

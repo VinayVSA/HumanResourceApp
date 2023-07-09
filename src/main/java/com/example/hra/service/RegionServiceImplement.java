@@ -33,7 +33,6 @@ public class RegionServiceImplement implements RegionService {
     public Region getRegionById(BigDecimal regionId) {
       return regionRepository.findByRegionId(regionId).orElseThrow(()->new RegionNotFoundException("Region Not Found"));}
     @Override
-    @Transactional
     public void deleteRegion(BigDecimal regionId) {
         regionRepository.findByRegionId(regionId).orElseThrow(()->new RegionNotFoundException("Region Not Found"));
         try {regionRepository.deleteRegionByRegionId(regionId);}

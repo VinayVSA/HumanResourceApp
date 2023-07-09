@@ -1,8 +1,7 @@
 package com.example.hra.entity;
-
 import lombok.*;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 @Setter
@@ -10,7 +9,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
 @Entity
 @Table(name = "job_history")
 public class JobHistory implements Serializable {
@@ -28,7 +26,7 @@ public class JobHistory implements Serializable {
     private Department department;
     @Column(name = "start_date",insertable = false, updatable = false)
     private Date startDate;
+    @NotNull
     @Column(name = "end_date")
     private Date endDate;
 }
-

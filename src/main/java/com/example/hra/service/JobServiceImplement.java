@@ -38,14 +38,13 @@ public class JobServiceImplement implements JobService {
         jobRepository.save(job);
         return job;}
     @Override
-
     public void delJobById(String jobId)
     {
         jobRepository.findByJobId(jobId).orElseThrow(()->new JobNotFoundException("Job Not Found"));
         try{
             jobRepository.deleteByJobId(jobId);}
         catch (Exception re){
-            System.out.println("CATCH");throw new JobNotFoundException("Cannot delete or update a parent row: a foreign key constraint fails");}
+            throw new JobNotFoundException("Cannot delete or update a parent row: a foreign key constraint fails");}
         }
 }
 

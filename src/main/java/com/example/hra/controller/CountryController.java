@@ -1,14 +1,14 @@
 package com.example.hra.controller;
-
 import com.example.hra.entity.Country;
+import com.example.hra.exception.ValidationFailedException;
 import com.example.hra.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import javax.validation.Valid;
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/country")
 public class CountryController {
@@ -18,12 +18,16 @@ public class CountryController {
         this.countryService = countryService;
     }
     @PostMapping("")
-    public ResponseEntity<String> addCountry(@RequestBody Country country) {
+    public ResponseEntity<String> addCountry(@RequestBody @Valid Country country, BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+            throw new ValidationFailedException("Validation Failed");
         countryService.addCountry(country);
         return ResponseEntity.status(HttpStatus.CREATED).body("Record Created Successfully");
     }
     @PutMapping("")
-    public ResponseEntity<String> updateCountry(@RequestBody Country country) {
+    public ResponseEntity<String> updateCountry(@RequestBody@Valid Country country,BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+            throw new ValidationFailedException("Validation failed");
         countryService.modifyCountry(country);
         return ResponseEntity.ok("Record Modified Successfully");
     }
@@ -37,14 +41,12 @@ public class CountryController {
         countryService.deleteByCountryId(countryId);
         return ResponseEntity.ok().build();
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Country> getCountryById(@PathVariable("id") String id) {
         Country country = countryService.searchCountryById(id);
-        if (country != null) {
+        if (country != null)
             return ResponseEntity.ok(country);
-        } else {
+        else
             return ResponseEntity.notFound().build();
-        }
     }
 }
