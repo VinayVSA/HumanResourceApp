@@ -1,0 +1,45 @@
+package com.example.hra.services;
+import com.example.hra.entities.Location;
+import com.example.hra.exceptions.LocationNotFoundException;
+import com.example.hra.repositories.LocationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.List;
+@Service
+public class LocationServiceImplement implements LocationService {
+    private LocationRepository locationRepository;
+    @Autowired
+    public void setLocationRepository(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+    }
+    @Override
+    public void addLocation(Location location) {
+        locationRepository.save(location);
+    }
+    @Override
+    public void updateLocation(Location location) {
+       Location location1=locationRepository.findByLocationId(location.getLocationId()).orElseThrow(()->new LocationNotFoundException("Location Not Found"));
+        location1.setLocationId(location.getLocationId());
+        location1.setStreetAddress(location.getStreetAddress());
+        location1.setCity(location.getCity());
+        location1.setPostalCode(location.getPostalCode());
+        location1.setStateProvince(location.getStateProvince());
+        location1.setCountry(location.getCountry());
+        locationRepository.save(location);
+    }
+    @Override
+    public List<Location> getAllLocations() {
+        return locationRepository.findAll();}
+    @Override
+    public Location getLocationById(BigDecimal locationId) {
+        return locationRepository.findByLocationId(locationId).orElseThrow(()->new LocationNotFoundException("Location Not Found"));}
+    @Override
+    @Transactional
+    public String deleteByLocationId(BigDecimal locationId) {
+        locationRepository.findByLocationId(locationId).orElseThrow(()->new LocationNotFoundException("Location Not Found"));
+        locationRepository.deleteByLocationId(locationId);
+        return "Record deleted Successfully";
+    }
+}
