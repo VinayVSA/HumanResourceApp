@@ -15,7 +15,7 @@ public class Country {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "com.example.hra.entities.CountryIdGenerator")
-    @Column(name = "country_id", length = 4,columnDefinition = "char")
+    @Column(name = "country_id", length = 2,columnDefinition = "char")
     private String countryId;
     @Pattern(regexp = "^[a-zA-Z[\\s]*[a-zA-Z]]+$", message = "Country name should contain only alphabets")
     @NotBlank(message = "Country name is required")

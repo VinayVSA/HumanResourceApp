@@ -4,14 +4,12 @@ import org.hibernate.id.IdentifierGenerator;
 import java.io.Serializable;
 import java.util.Random;
 public class CountryIdGenerator implements IdentifierGenerator {
-
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         StringBuilder randomString = new StringBuilder();
         Random random = new Random();
-
-        while (randomString.length() < 4) {
+        while (randomString.length() < 2) {
             int index = random.nextInt(characters.length());
             randomString.append(characters.charAt(index));
         }

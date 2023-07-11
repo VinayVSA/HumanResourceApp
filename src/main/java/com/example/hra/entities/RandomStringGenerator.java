@@ -1,15 +1,10 @@
 package com.example.hra.entities;
-
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
 import java.util.Random;
-
 public class RandomStringGenerator implements IdentifierGenerator {
-
-
-
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
