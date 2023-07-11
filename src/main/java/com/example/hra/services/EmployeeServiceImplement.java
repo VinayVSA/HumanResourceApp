@@ -38,7 +38,6 @@ public class EmployeeServiceImplement implements EmployeeService {
         return employeeRepository.save(employee);}
     @Override
     public Employee updateEmployee(Employee employee) {
-        employeeRepository.findByEmployeeId(employee.getEmployeeId()).orElseThrow(()->new EmployeeNotFoundException("Employee Not Found"));
         return employeeRepository.save(employee);}
     @Override
     public Employee assignJobToEmployee(BigDecimal employeeId, String jobId) {

@@ -20,13 +20,6 @@ public class LocationServiceImplement implements LocationService {
     }
     @Override
     public void updateLocation(Location location) {
-       Location location1=locationRepository.findByLocationId(location.getLocationId()).orElseThrow(()->new LocationNotFoundException("Location Not Found"));
-        location1.setLocationId(location.getLocationId());
-        location1.setStreetAddress(location.getStreetAddress());
-        location1.setCity(location.getCity());
-        location1.setPostalCode(location.getPostalCode());
-        location1.setStateProvince(location.getStateProvince());
-        location1.setCountry(location.getCountry());
         locationRepository.save(location);
     }
     @Override

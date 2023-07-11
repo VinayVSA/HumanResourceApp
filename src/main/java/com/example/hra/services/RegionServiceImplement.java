@@ -20,10 +20,7 @@ public class RegionServiceImplement implements RegionService {
         return "Record Created Successfully";}
     @Override
     public String modifyRegion(Region region) {
-        Region region1 = regionRepository.findByRegionId(region.getRegionId()).orElseThrow(()->new RegionNotFoundException("Region Not Found"));
-        region1.setRegionId(region.getRegionId());
-        region1.setRegionName(region.getRegionName());
-        regionRepository.save(region1);
+        regionRepository.save(region);
         return "Record Modified Successfully";}
     @Override
     public List<Region> getAllRegions() {

@@ -33,8 +33,7 @@ public class DepartmentServiceImplement implements DepartmentService {
 
     @Override
     public String modifyDepartment(Department department) {
-        Department department1 = departmentRepository.findByDepartmentId(department.getDepartmentId()).orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
-        departmentRepository.save(department1);
+        departmentRepository.save(department);
         return "Record Modified Successfully";
     }
 
