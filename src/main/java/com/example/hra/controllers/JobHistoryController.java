@@ -21,8 +21,8 @@ public class JobHistoryController {
     @PostMapping("/{employee_id}/{start_date}/{job_id}/{department_id}")
     public ResponseEntity<String> addJobHistoryEntry(@PathVariable("employee_id") BigDecimal employeeId,
                                                      @PathVariable("start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-                                                     @PathVariable String job_id,@PathVariable("department_id") BigDecimal departmentId) {
-        String jobHistory = jobHistoryService.createJobHistoryEntry(employeeId,job_id, startDate, departmentId);
+                                                     @PathVariable String jobId,@PathVariable("department_id") BigDecimal departmentId) {
+        String jobHistory = jobHistoryService.createJobHistoryEntry(employeeId,jobId, startDate, departmentId);
         if (jobHistory.equals("Record Created Successfully"))
             return ResponseEntity.ok(jobHistory);
         else

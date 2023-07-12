@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "departments")
 @Entity
 public class Department {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "department_id")
     private BigDecimal departmentId;
     @Pattern(regexp = "^[a-zA-Z[\\s]*[a-zA-Z]]+$", message = "Department name should contain only alphabets")

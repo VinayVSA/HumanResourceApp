@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "locations")
 public class Location {
-    @Id@GeneratedValue(strategy = GenerationType.AUTO)
+    @Id@GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "location_id")
     private BigDecimal locationId;
     @NotBlank(message = "Street address name is required")

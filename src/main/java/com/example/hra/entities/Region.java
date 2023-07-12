@@ -13,7 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Region {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "region_id")
     private BigDecimal regionId;
     @Pattern(regexp = "^[a-zA-Z[\\s]*[a-zA-Z]]+$", message = "Region name should contain only alphabets")

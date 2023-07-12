@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.*;
 @Service
 public class DepartmentServiceImplement implements DepartmentService {
+    private String departmentNotFound = "Department Not Found";
     private DepartmentRepository departmentRepository;
     private EmployeeRepository employeeRepository;
 
@@ -40,18 +41,21 @@ public class DepartmentServiceImplement implements DepartmentService {
     @Override
     @Transactional
     public void deleteDepartmentById(BigDecimal departmentId) {
-        departmentRepository.findByDepartmentId(departmentId).orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
-        try {
-            departmentRepository.deleteByDepartmentId(departmentId);
-        } catch (RuntimeException re) {
-            throw new DepartmentNotFoundException("Cannot delete or update a parent row: a foreign key constraint fails");
+        if(departmentRepository.findByDepartmentId(departmentId).isPresent()) {
+            try {
+                departmentRepository.deleteByDepartmentId(departmentId);
+            } catch (RuntimeException re) {
+                throw new DepartmentNotFoundException("Cannot delete or update a parent row: a foreign key constraint fails");
+            }
+        }else{
+            throw new DepartmentNotFoundException(departmentNotFound);
         }
     }
 
     @Override
     public Map<String, BigDecimal> findMaxSalaryByDepartmentId(BigDecimal departmentId) {
-        Map<String, BigDecimal> hashMap = new HashMap<String, BigDecimal>();
-        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
+        Map<String, BigDecimal> hashMap = new HashMap<>();
+        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(() -> new DepartmentNotFoundException(departmentNotFound));
         List<Employee> employees = department.getEmployees();
         BigDecimal max = employees.stream()
                 .map(Employee::getSalary)
@@ -63,8 +67,8 @@ public class DepartmentServiceImplement implements DepartmentService {
 
     @Override
     public Map<String, BigDecimal> findMinSalaryByDepartmentId(BigDecimal departmentId) {
-        Map<String, BigDecimal> hashMap = new HashMap<String, BigDecimal>();
-        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
+        Map<String, BigDecimal> hashMap = new HashMap<>();
+        Department department = departmentRepository.findByDepartmentId(departmentId).orElseThrow(() -> new DepartmentNotFoundException(departmentNotFound));
         List<Employee> employees = department.getEmployees();
         BigDecimal min = employees.stream()
                 .map(Employee::getSalary)

@@ -19,6 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/employees")
 public class EmployeeController {
+    private String validationFailed = "Validation Failed";
     private EmployeeService employeeService;
     @Autowired
     public void setEmployeeService(EmployeeService employeeService) {
@@ -32,21 +33,21 @@ public class EmployeeController {
     @PostMapping("")
     public ResponseEntity<Employee> addEmployee(@RequestBody @Valid Employee employee, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
-            throw new ValidationFailedException("Validation Failed");
+            throw new ValidationFailedException(validationFailed);
         Employee employee1=employeeService.addEmployee(employee);
         return new ResponseEntity<>(employee1,HttpStatus.OK);
     }
     @PutMapping("")
     public ResponseEntity<Employee> updateEmployee(@RequestBody @Valid Employee employee,BindingResult bindingResult) {
         if(bindingResult.hasErrors())
-            throw new ValidationFailedException("Validation Failed");
+            throw new ValidationFailedException(validationFailed);
         return new ResponseEntity<>(employeeService.updateEmployee(employee),HttpStatus.OK);
     }
     @PutMapping("/{job_id}")
-    public ResponseEntity<Employee> assignJobToEmployee(@PathVariable String job_id, @RequestParam @Valid BigDecimal employeeId,BindingResult bindingResult) {
+    public ResponseEntity<Employee> assignJobToEmployee(@PathVariable("job_id") String jobId,@RequestParam @Valid BigDecimal employeeId,BindingResult bindingResult) {
         if(bindingResult.hasErrors())
-            throw new ValidationFailedException("Validation Failed");
-        return new ResponseEntity<>(employeeService.assignJobToEmployee(employeeId, job_id),HttpStatus.OK);
+            throw new ValidationFailedException(validationFailed);
+        return new ResponseEntity<>(employeeService.assignJobToEmployee( jobId,employeeId),HttpStatus.OK);
     }
     @GetMapping("/findfname/{firstname}")
     public ResponseEntity<List<Employee>> findByFirstName(@PathVariable("firstname") String firstName) {
@@ -115,7 +116,7 @@ public class EmployeeController {
         if (result.equals("Record Modified Successfully"))
             return ResponseEntity.ok(result);
         else
-            throw new ValidationFailedException("Validation Failed "+result);
+            throw new ValidationFailedException(validationFailed+result);
     }
     @PutMapping("/mg=/{manager_id}")
     public ResponseEntity<String> assignManager(
@@ -123,18 +124,18 @@ public class EmployeeController {
             @RequestBody @Valid BigDecimal employeeId,BindingResult bindingResult) {
         String result = employeeService.assignManager(employeeId, managerId);
         if (bindingResult.hasErrors())
-            throw new ValidationFailedException("Validation Failed "+result);
+            throw new ValidationFailedException(validationFailed+result);
         return ResponseEntity.ok(result);
     }
     @PutMapping("/em=/{email}")
     public ResponseEntity<String> updateEmployeeEmail(@PathVariable("email") String email,
-                                                      @RequestParam BigDecimal employee_id) {
-        return new ResponseEntity<>(employeeService.updateEmployeeEmailByEmployeeId(email,employee_id),HttpStatus.OK);
+                                                      @RequestParam BigDecimal employeeId) {
+        return new ResponseEntity<>(employeeService.updateEmployeeEmailByEmployeeId(email,employeeId),HttpStatus.OK);
     }
     @PutMapping("/ph=/{phonenumber}")
     public ResponseEntity<String> updateEmployeePhoneNumber( @PathVariable("phonenumber") String phoneNumber,
-                                                              @RequestParam BigDecimal employee_id) {
-        return new ResponseEntity<>(employeeService.updateEmployeePhoneNumberByEmployeeId(phoneNumber,employee_id),HttpStatus.OK);
+                                                              @RequestParam BigDecimal employeeId) {
+        return new ResponseEntity<>(employeeService.updateEmployeePhoneNumberByEmployeeId(phoneNumber,employeeId),HttpStatus.OK);
     }
     @PutMapping("/dp/{department_id}")
     public ResponseEntity<String> assignDepartment(
@@ -142,7 +143,7 @@ public class EmployeeController {
             @RequestBody@Valid BigDecimal employeeId,BindingResult bindingResult) {
         String result = employeeService.assignDepartment(employeeId, departmentId);
         if (bindingResult.hasErrors())
-            throw new ValidationFailedException("Validation Failed "+result);
+            throw new ValidationFailedException(validationFailed+result);
         return ResponseEntity.ok(result);
     }
 }

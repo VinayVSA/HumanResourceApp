@@ -14,7 +14,7 @@ import java.util.Map;
 public interface EmployeeService {
     Employee addEmployee(Employee employee);
     Employee updateEmployee(Employee employee);
-    Employee assignJobToEmployee(BigDecimal employeeId, String jobId);
+    Employee assignJobToEmployee(String jobId,BigDecimal employeeId);
     List<Employee> findByFirstName(String firstName);
     Employee findByEmail(String email);
     Employee findByPhoneNumber(String phoneNumber);

@@ -31,9 +31,15 @@ public class RegionServiceImplement implements RegionService {
     @Override
     @Transactional
     public void deleteRegion(BigDecimal regionId) {
-        regionRepository.findByRegionId(regionId).orElseThrow(()->new RegionNotFoundException("Region Not Found"));
-        try {regionRepository.deleteRegionByRegionId(regionId);}
-        catch (RuntimeException ex){throw new RegionNotFoundException("Cannot delete or update a parent row: a foreign key constraint fails");}
+        if(regionRepository.findByRegionId(regionId).isPresent()) {
+            try {
+                regionRepository.deleteRegionByRegionId(regionId);
+            } catch (RuntimeException ex) {
+                throw new RegionNotFoundException("Cannot delete or update a parent row: a foreign key constraint fails");
+            }
+        }else{
+            throw new RegionNotFoundException("Region Not Found");
         }
+    }
 }
 

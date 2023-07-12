@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "employees")
 @Entity
 public class Employee {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "employee_id")
     private BigDecimal employeeId;
     @Pattern(regexp = "^[a-zA-Z]+$", message = "First name should contain only alphabets")
@@ -33,7 +33,7 @@ public class Employee {
     @Email(message = "Invalid email format")
     @Column(name = "email")
     private String email;
-    @Pattern(regexp = "[6-9]+[0-9]{9}", message = "Phone number should contain only numbers")
+    @Pattern(regexp = "[6-9]+\\d{9}", message = "Phone number should contain only numbers")
     @NotBlank(message = "Phone Number  is required")
     @Column(name = "phone_number")
     private String phoneNumber;

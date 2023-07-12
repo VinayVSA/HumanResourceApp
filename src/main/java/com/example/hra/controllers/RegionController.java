@@ -21,14 +21,14 @@ public class RegionController {
     @PostMapping
     public ResponseEntity<String> addRegion(@RequestBody @Valid Region region, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new ValidationFailedException("Validation Failed");;
+            throw new ValidationFailedException("Validation Failed");
         regionService.addRegion(region);
         return ResponseEntity.status(HttpStatus.CREATED).body("Record Created Successfully");
     }
     @PutMapping
     public ResponseEntity<String> updateRegion(@RequestBody @Valid Region region,BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new ValidationFailedException("Validation Failed");;
+            throw new ValidationFailedException("Validation Failed");
         regionService.modifyRegion(region);
         return ResponseEntity.ok("Record Modified Successfully");
     }

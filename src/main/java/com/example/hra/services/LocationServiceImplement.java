@@ -31,8 +31,11 @@ public class LocationServiceImplement implements LocationService {
     @Override
     @Transactional
     public String deleteByLocationId(BigDecimal locationId) {
-        locationRepository.findByLocationId(locationId).orElseThrow(()->new LocationNotFoundException("Location Not Found"));
-        locationRepository.deleteByLocationId(locationId);
-        return "Record deleted Successfully";
+        if(locationRepository.findByLocationId(locationId).isPresent()) {
+            locationRepository.deleteByLocationId(locationId);
+            return "Record deleted Successfully";
+        }else{
+            throw new LocationNotFoundException("Location Not Found");
+        }
     }
 }

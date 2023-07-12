@@ -27,10 +27,16 @@ public class CountryServiceImplement implements CountryService {
     }
     @Override
     public void deleteByCountryId(String countryId) {
-       countryRepository.findByCountryId(countryId).orElseThrow(()->new CountryNotFoundException("Country Not Found"));
-        try {countryRepository.deleteById(countryId);}
-        catch (Exception c)
-        {throw new CountryNotFoundException("Cannot delete or update a parent row: a foreign key constraint");}}
+       if(countryRepository.findByCountryId(countryId).isPresent()) {
+           try {
+               countryRepository.deleteById(countryId);
+           } catch (Exception c) {
+               throw new CountryNotFoundException("Cannot delete or update a parent row: a foreign key constraint");
+           }
+       }else{
+           throw new CountryNotFoundException("Country Not Found");
+       }
+    }
     @Override
     public Country searchCountryById(String countryId) {
     return countryRepository.findByCountryId(countryId).orElseThrow(()->new CountryNotFoundException("Country Not Found"));}

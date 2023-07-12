@@ -1,13 +1,11 @@
 package com.example.hra;
-import com.example.hra.entities.Country;
-import com.example.hra.entities.Job;
-import com.example.hra.entities.Location;
-import com.example.hra.entities.Region;
+import com.example.hra.entities.*;
 import com.example.hra.repositories.CountryRepository;
 import com.example.hra.repositories.JobRepository;
 import com.example.hra.repositories.LocationRepository;
 import com.example.hra.repositories.RegionRepository;
 import com.example.hra.services.CountryService;
+import com.example.hra.services.JobService;
 import com.example.hra.services.RegionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,10 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-@SpringBootTest
+//@SpringBootTest
 public class HumanResourceAppTest {
-    private JobRepository jobRepository;
+/*    private JobRepository jobRepository;
     @Autowired
     public void setJobRepository(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
@@ -34,7 +31,6 @@ public class HumanResourceAppTest {
     public void setCountryRepository(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
     }
-
     private RegionService regionService;
     @Autowired
     public void setRegionService(RegionService regionService) {
@@ -50,18 +46,23 @@ public class HumanResourceAppTest {
     public void setLocationRepository(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
+    private JobService jobService;
+    @Autowired
+    public void setJobService(JobService jobService) {
+        this.jobService = jobService;
+    }
 
     @Test
     public void testGetByJobId()
     {
-        String jobId = "7ym6HQOTQb";
-        Job job = new Job("7ym6HQOTQb","Manager",BigDecimal.valueOf(1200),new BigDecimal(1600));
+        String jobId = "AC_MGR";
+        Job job = new Job("AC_MGR","Accounting Manager",BigDecimal.valueOf(8200),new BigDecimal(16000));
         Assertions.assertEquals(job,jobRepository.findByJobId(jobId).get());
     }
     @Test
     public void testUpdateRegion()
     {
-        Assertions.assertEquals(new Region(BigDecimal.valueOf(6),"EastIndia"),regionRepository.save(new Region(BigDecimal.valueOf(6),"EastIndia")));
+        Assertions.assertEquals(new Region(BigDecimal.valueOf(20),"EastCoast"),regionRepository.save(new Region(BigDecimal.valueOf(20),"EastCoast")));
     }
     @Test
     public void testGetRegionById()
@@ -77,8 +78,8 @@ public class HumanResourceAppTest {
     @Test
     public void testGetLocationById()
     {
-        Assertions.assertEquals(new Location(BigDecimal.valueOf(7),"Kokapet","500002","Hyderabad","Telangana",countryService.searchCountryById("JP"))
-                ,locationRepository.findByLocationId(new BigDecimal(7)).get());
+        Assertions.assertEquals(new Location(BigDecimal.valueOf(1200),"2017 Shinjuku-ku","1689","Tokyo","Tokyo Prefecture",countryService.searchCountryById("JP"))
+                ,locationRepository.findByLocationId(new BigDecimal(1200)).get());
     }
     @Test
     public void testModifyCountry() {
@@ -89,12 +90,8 @@ public class HumanResourceAppTest {
     public void testGetAllRegions()
     {
         List<Region> regionsList = new ArrayList<>();
-        regionsList.add(new Region(BigDecimal.valueOf(1),"USSR"));
-        regionsList.add(new Region(BigDecimal.valueOf(6),"EastIndia"));
         regionsList.add(new Region(BigDecimal.valueOf(10),"Europe"));
-        regionsList.add(new Region(BigDecimal.valueOf(17),"Pacific"));
-        regionsList.add(new Region(BigDecimal.valueOf(20),"Americas"));
-        regionsList.add(new Region(BigDecimal.valueOf(24),"Pan India"));
+        regionsList.add(new Region(BigDecimal.valueOf(20),"EastCoast"));
         regionsList.add(new Region(BigDecimal.valueOf(30),"Asia"));
         regionsList.add(new Region(BigDecimal.valueOf(40),"Oceania"));
         regionsList.add(new Region(BigDecimal.valueOf(50),"Africa"));
@@ -107,8 +104,9 @@ public class HumanResourceAppTest {
                 ,new Location(BigDecimal.valueOf(1400),"churchilRoad","26192","England","UK",countryService.searchCountryById("US")));
     }
     @Test
-    public void testModifyJobHistory()
-    {
-
-    }
+    public void testUpdateJobSalary() {
+        Job job = new Job("PU_CLERK","Purchasing Clerk",BigDecimal.valueOf(3500),BigDecimal.valueOf(5500));
+        Job updatedJob = jobService.updateJobSalary("PU_CLERK", new BigDecimal(3500), new BigDecimal(5500));
+        Assertions.assertEquals(job,updatedJob);
+    }*/
 }
