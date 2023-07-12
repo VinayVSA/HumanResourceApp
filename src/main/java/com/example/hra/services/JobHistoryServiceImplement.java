@@ -52,12 +52,7 @@ public class JobHistoryServiceImplement implements JobHistoryService {
         if (jobHistoryRepository.existsById(jobHistoryId))
             return "Job history entry already exists for the given employee and start date.";
        Date endDate = new Date();
-       JobHistory jobHistory = new JobHistory();
-       jobHistory.setDepartment(department);
-       jobHistory.setEmployee(employee);
-       jobHistory.setJob(job);
-       jobHistory.setId(jobHistoryId);
-       jobHistory.setEndDate(endDate);
+       JobHistory jobHistory = new JobHistory(jobHistoryId,employee,job,department,startDate,endDate);
        jobHistoryRepository.save(jobHistory);
        return "Record Created Successfully";
     }

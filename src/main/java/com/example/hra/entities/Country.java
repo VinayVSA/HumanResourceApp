@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 @Entity
 @Setter
 @Getter
@@ -24,4 +25,21 @@ public class Country {
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "region_id")
     private Region region;
+    @Override
+    public int hashCode() {
+        return Objects.hash(countryId, countryName, region);
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Country other = (Country) obj;
+        return Objects.equals(countryId, other.countryId)
+                && Objects.equals(countryName, other.countryName)
+                && Objects.equals(region, other.region);
+    }
 }

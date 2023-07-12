@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
@@ -27,4 +28,18 @@ public class Job  {
     @DecimalMax(value="99999")
     @Column(name = "max_salary")
     private BigDecimal maxSalary;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Job job = (Job) o;
+        return jobId.equals(job.jobId) &&
+                jobTitle.equals(job.jobTitle) &&
+                minSalary.equals(job.minSalary) &&
+                maxSalary.equals(job.maxSalary);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(jobId, jobTitle, minSalary, maxSalary);
+    }
 }

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
+import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
@@ -32,4 +33,24 @@ public class Location {
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "country_id")
     private Country country;
+    @Override
+    public int hashCode() {
+        return Objects.hash(locationId, streetAddress, postalCode, city, stateProvince, country);
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Location other = (Location) obj;
+        return Objects.equals(locationId, other.locationId)
+                && Objects.equals(streetAddress, other.streetAddress)
+                && Objects.equals(postalCode, other.postalCode)
+                && Objects.equals(city, other.city)
+                && Objects.equals(stateProvince, other.stateProvince)
+                && Objects.equals(country, other.country);
+    }
 }
