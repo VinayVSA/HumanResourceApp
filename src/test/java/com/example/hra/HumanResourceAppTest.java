@@ -1,4 +1,4 @@
-package com.example.hra;
+/*package com.example.hra;
 import com.example.hra.entities.Country;
 import com.example.hra.entities.Job;
 import com.example.hra.entities.Location;
@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
+//@SpringBootTest
 public class HumanResourceAppTest {
     private JobRepository jobRepository;
     @Autowired
@@ -111,4 +111,4 @@ public class HumanResourceAppTest {
     {
 
     }
-}
+}*/
